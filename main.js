@@ -30,13 +30,46 @@
     return d.getFullYear() + '.' + mm + '.' + dd + ' (' + days[d.getDay()] + ')';
   }
 
+  // 段落（空行区切り）を <p> に
+  function paras(text) {
+    return String(text || '').split(/\n\s*\n/)
+      .map(function (p) { return '<p>' + esc(p.trim()) + '</p>'; }).join('');
+  }
+
   /* ---- プロフィール ---- */
   if (D.profile) {
-    if (D.profile.name) el('name').textContent = D.profile.name;
-    if (D.profile.tagline) el('tagline').textContent = D.profile.tagline;
-    if (D.profile.bio) {
-      el('bio').innerHTML = D.profile.bio.split('\n')
-        .map(function (p) { return '<p>' + esc(p) + '</p>'; }).join('');
+    var P = D.profile;
+    if (P.name) el('name').textContent = P.name;
+    if (P.pronounce) el('pronounce').textContent = P.pronounce; else el('pronounce').style.display = 'none';
+    if (P.tagline) el('tagline').textContent = P.tagline;
+
+    var html = '';
+    if (P.photo) {
+      html += '<img class="bio__photo" src="' + esc(P.photo) + '" alt="' + esc(P.name || 'XTAL') +
+        '" width="1000" height="1250" loading="lazy" />';
+    }
+    var hasJa = !!P.bioJa;
+    if (hasJa) {
+      html += '<div class="bio__toggle">' +
+        '<button type="button" class="bio__lang is-active" data-lang="en">EN</button>' +
+        '<button type="button" class="bio__lang" data-lang="ja">日本語</button></div>';
+    }
+    if (P.bio) html += '<div class="bio__text" id="bio-en" lang="en">' + paras(P.bio) + '</div>';
+    if (hasJa) html += '<div class="bio__text" id="bio-ja" lang="ja" hidden>' + paras(P.bioJa) + '</div>';
+    el('bio').innerHTML = html;
+
+    if (hasJa) {
+      var btns = el('bio').querySelectorAll('.bio__lang');
+      Array.prototype.forEach.call(btns, function (btn) {
+        btn.addEventListener('click', function () {
+          var en = btn.getAttribute('data-lang') === 'en';
+          Array.prototype.forEach.call(btns, function (b) {
+            b.classList.toggle('is-active', b === btn);
+          });
+          el('bio-en').hidden = !en;
+          el('bio-ja').hidden = en;
+        });
+      });
     }
   }
 

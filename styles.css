@@ -68,8 +68,16 @@ body {
   line-height: 1;
 }
 
+.hero__pronounce {
+  margin: 10px 0 0;
+  font-size: 12px;
+  letter-spacing: 0.12em;
+  color: var(--ink-dim);
+  font-style: italic;
+}
+
 .hero__tagline {
-  margin: 18px 0 0;
+  margin: 8px 0 0;
   font-size: clamp(13px, 3.4vw, 16px);
   letter-spacing: 0.14em;
   text-transform: uppercase;
@@ -146,12 +154,46 @@ body {
 }
 
 /* ---- Biography ---- */
-.bio p {
-  margin: 0 0 12px;
+.bio__photo {
+  display: block;
+  width: 100%;
+  max-width: 360px;
+  height: auto;
+  margin: 0 auto 24px;
+  border-radius: 2px;
+}
+.bio__toggle {
+  display: flex;
+  justify-content: center;
+  gap: 8px;
+  margin-bottom: 18px;
+}
+.bio__lang {
+  appearance: none;
+  background: rgba(0, 0, 0, 0.14);
+  color: var(--ink-dim);
+  border: 1px solid var(--line);
+  border-radius: 2px;
+  padding: 5px 14px;
+  font: inherit;
+  font-size: 12px;
+  letter-spacing: 0.08em;
+  cursor: pointer;
+  transition: color 0.2s ease, border-color 0.2s ease, background 0.2s ease;
+}
+.bio__lang:hover { color: var(--ink); }
+.bio__lang.is-active {
+  color: var(--ink);
+  border-color: var(--ink);
+  background: rgba(0, 0, 0, 0.28);
+}
+.bio__text p {
+  margin: 0 0 14px;
   font-size: 15px;
   line-height: 1.85;
   color: var(--ink);
 }
+.bio__text[lang], .bio__text:last-child p:last-child { margin-bottom: 0; }
 
 /* ---- Schedule ---- */
 .events { list-style: none; margin: 0; padding: 0; }

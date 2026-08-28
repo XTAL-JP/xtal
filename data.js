@@ -7,25 +7,31 @@
 var DATA = {
   profile: {
     name: 'XTAL',
-    tagline: 'DJ / Producer — Nagano, Japan',
-    // 英語のバイオ本文（改行は \n で。※プレースホルダ。本人の文章に差し替えてください）
+    pronounce: 'pronounced “Crystal”',
+    tagline: 'DJ / Producer',
+    photo: 'assets/xtal.jpg',
+    // 英語バイオ（段落は空行で区切る）
     bio:
-      'XTAL is a DJ and producer based in Nagano, Japan. ' +
-      'Moving between deep, melodic house and textured electronic soundscapes, ' +
-      'XTAL has released on labels including Kakubarhythm and collaborated with artists ' +
-      'such as Inner Science and Keita Sano. ' +
-      '(This is placeholder text — replace with your own biography.)'
+      'Active since 1995, XTAL is a DJ and producer best known as one half of Traks Boys with k404 and resident of DK SOUND—a notorious rooftop rave pulsing above Kawasaki’s industrial skyline. He has also been active in several projects, including the band (((Ssssurrounddd))) with Jun Kamoda, a duo with Your Song Is Good guitarist Masatomo Yoshizawa, and a collaboration unit with dance-music producer Keita Sano, consistently releasing new material across these collaborations.\n\n' +
+      'As a solo artist, XTAL released singles on Crue-L Records and Beats In Space Records before putting out his debut album Skygazer (2016, Crue-L Records), followed by Aburelu (2020, self-released on Cizima), and his third album EKO (2024, Kakubarhythm).\n\n' +
+      'Grounded in club music yet free from stylistic boundaries, XTAL’s DJ sets and productions flexibly move between diverse genres and eras, revealing a sound that is both distinctive and timeless.',
+    // 日本語バイオ（Biography セクションの「日本語」トグルで表示）
+    bioJa:
+      '1995年からDJを開始。川崎工場地帯の某工場屋上にて行われているインダストリアル・レイブパーティー「DK SOUND」で、k404とのTraks BoysとしてレジデントDJを務める。Jun Kamodaとのバンド(((さらうんど)))、Your Song Is Goodのギタリスト吉澤成友とのユニット、ダンス・ミュージック・プロデューサーKeita Sanoとのユニットでも、精力的にリリースを重ねる。\n\n' +
+      'ソロとしては、〈Crue-L Records〉や〈Beats In Space Records〉からシングルをリリースした後、〈Crue-L Records〉からの1stアルバム『Skygazer』（2016年）、自主レーベル〈Cizima〉からの2ndアルバム『Aburelu』（2020年）に続き、〈カクバリズム〉より3rdアルバム『EKO』（2024年）をリリース。\n\n' +
+      'クラブ・ミュージックを基点に、多様なジャンルや時代を行き来するフレキシブルなプレイとプロダクションを展開している。'
   },
 
-  // 中央揃えのソーシャル導線（LinkTree のアイコン群）
+  // 中央揃えのソーシャル導線
   socials: [
-    { label: 'Instagram',   url: 'https://www.instagram.com/xtal_jp/' },
+    { label: 'Instagram',   url: 'https://www.instagram.com/_xtal_jp_' },
     { label: 'X',           url: 'https://x.com/XTAL_JP' },
-    { label: 'SoundCloud',  url: 'https://soundcloud.com/xtal_jp' },
+    { label: 'TikTok',      url: 'https://www.tiktok.com/@xtal641' },
     { label: 'YouTube',     url: 'https://www.youtube.com/@XTAL_JP' },
-    { label: 'Spotify',     url: 'https://open.spotify.com/search/XTAL' },   // 要確認：アーティストページURL
-    { label: 'Apple Music', url: 'https://music.apple.com/jp/search?term=XTAL' }, // 要確認：アーティストページURL
-    { label: 'Bandcamp',    url: 'https://bandcamp.com/search?q=XTAL' }      // 要確認：アーティストページURL
+    { label: 'SoundCloud',  url: 'https://soundcloud.com/crystal-a' },
+    { label: 'Bandcamp',    url: 'https://xtal-jp.bandcamp.com/' },
+    { label: 'Spotify',     url: 'https://open.spotify.com/artist/2t07wCTjaVSrObNSvgMyLi' },
+    { label: 'Apple Music', url: 'https://music.apple.com/jp/artist/xtal/1510861367' }
   ],
 
   // 注目リンク（リリース・拡張機能など。LinkTree のメインボタン相当）
