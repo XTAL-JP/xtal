@@ -1,8 +1,9 @@
 /*
  * 暖色系の有機的なグラデーション背景をランダム生成する。
- * - アクセス（リロード）ごとに配色・暗部の形が変わる。
+ * - アクセス（リロード）ごとに配色・暗部・流れが変わる。
  * - 生成は静止画（アニメーションなし＝軽量）。resize 時のみ同じ配色で再描画。
- * - 低解像度バッファに描いて拡大＋ブラーで、滑らかな液状グラデーションにする。
+ * - 2スケール構成（大きな発光＋小さなディテール）＋伸長・回転させた楕円グラデ（流れる筋）で
+ *   色数と複雑性を確保。低解像度バッファに描いて拡大＋ブラーで滑らかにする。
  * - フィルムグレイン（ノイズ）を薄く重ねて粒状感を付与。
  */
 (function () {
@@ -12,38 +13,53 @@
 
   function rand(min, max) { return min + Math.random() * (max - min); }
 
+  /* 暖色を中心に、細分化した色相からピック（まれにクールなアクセント） */
+  function pickColor() {
+    var r = Math.random();
+    if (r < 0.15)  return { h: rand(0, 10),    s: rand(85, 98),  l: rand(50, 60) };   // 赤
+    if (r < 0.36)  return { h: rand(10, 22),   s: rand(88, 100), l: rand(52, 62) };   // コーラル
+    if (r < 0.57)  return { h: rand(22, 36),   s: rand(90, 100), l: rand(50, 60) };   // オレンジ
+    if (r < 0.71)  return { h: rand(36, 46),   s: rand(88, 100), l: rand(54, 64) };   // アンバー
+    if (r < 0.80)  return { h: rand(38, 46),   s: rand(80, 92),  l: rand(50, 58) };   // ゴールド（アンバー寄り）
+    if (r < 0.90)  return { h: rand(28, 44),   s: rand(65, 88),  l: rand(64, 74) };   // ピーチ/クリーム
+    if (r < 0.96)  return { h: rand(335, 352), s: rand(70, 88),  l: rand(56, 66) };   // ローズ/ピンク
+    return { h: rand(292, 320), s: rand(60, 80), l: rand(54, 64) };                   // 稀：バイオレット/マゼンタ
+  }
+
   /* このロードで1回だけランダムな配色構成を決める（resize では変えない） */
   function buildComposition() {
-    var blobs = [];
-    var n = Math.floor(rand(4, 6));
-    for (var i = 0; i < n; i++) {
-      var kind = Math.random(), hue, sat, light, a;
-      if (kind < 0.35) {            // コーラル
-        hue = rand(4, 14);  sat = rand(85, 98);  light = rand(52, 62); a = rand(0.7, 0.95);
-      } else if (kind < 0.85) {     // オレンジ〜アンバー
-        hue = rand(16, 34); sat = rand(90, 100); light = rand(50, 60); a = rand(0.75, 0.95);
-      } else {                      // クリーム／ピーチのハイライト（控えめ）
-        hue = rand(30, 44); sat = rand(80, 95);  light = rand(64, 74); a = rand(0.6, 0.8);
-      }
+    var blobs = [], i, c;
+    // 大きめの発光ブロブ（多め・伸長した筋）
+    var n = Math.floor(rand(6, 9));
+    for (i = 0; i < n; i++) {
+      c = pickColor();
       blobs.push({
-        x: rand(-0.1, 1.1), y: rand(-0.1, 1.1),
-        r: rand(0.28, 0.58),        // 半径を絞り、筋として見せる
-        color: 'hsla(' + hue + ',' + sat + '%,' + light + '%,',
-        alpha: a
+        x: rand(-0.15, 1.15), y: rand(-0.15, 1.15),
+        r: rand(0.30, 0.62), rot: rand(0, Math.PI), stretch: rand(1.0, 2.6),
+        h: c.h, s: c.s, l: c.l, a: rand(0.45, 0.78)
       });
     }
-    // 暗部（谷）— 強め・多めにして深い黒を効かせる
+    // 細かいディテール層（小さめ・数多く）
+    var m = Math.floor(rand(4, 7));
+    for (i = 0; i < m; i++) {
+      c = pickColor();
+      blobs.push({
+        x: rand(0, 1), y: rand(0, 1),
+        r: rand(0.10, 0.26), rot: rand(0, Math.PI), stretch: rand(1.0, 2.2),
+        h: c.h, s: c.s, l: Math.min(c.l + 4, 82), a: rand(0.35, 0.6)
+      });
+    }
+    // 暗部（谷）— 深い黒でコントラストと複雑性を出す
     var darks = [];
-    var dn = Math.floor(rand(4, 7));
-    for (var j = 0; j < dn; j++) {
+    var dn = Math.floor(rand(3, 6));
+    for (i = 0; i < dn; i++) {
       darks.push({
         x: rand(-0.05, 1.05), y: rand(-0.05, 1.15),
-        r: rand(0.35, 0.85),
-        hue: rand(12, 28), light: rand(3, 8),
-        alpha: rand(0.85, 1)
+        r: rand(0.30, 0.78), rot: rand(0, Math.PI), stretch: rand(1.0, 2.2),
+        h: rand(10, 30), l: rand(3, 8), a: rand(0.7, 0.95)
       });
     }
-    return { blobs: blobs, darks: darks, baseHue: rand(14, 26) };
+    return { blobs: blobs, darks: darks, baseHue: rand(12, 28) };
   }
 
   var comp = buildComposition();
@@ -62,6 +78,22 @@
     g.putImageData(img, 0, 0);
   })();
 
+  /* 伸長・回転させた楕円グラデを描く（流れる筋の表現） */
+  function paintBlob(b, o, bw, bh, minSide, inner, mid) {
+    var cx = o.x * bw, cy = o.y * bh, rr = o.r * minSide;
+    b.save();
+    b.translate(cx, cy);
+    b.rotate(o.rot || 0);
+    b.scale(o.stretch || 1, 1);            // x方向に伸ばして筋状に
+    var grd = b.createRadialGradient(0, 0, 0, 0, 0, rr);
+    grd.addColorStop(0, inner);
+    grd.addColorStop(0.55, mid);
+    grd.addColorStop(1, mid.replace(/[\d.]+\)$/, '0)'));
+    b.fillStyle = grd;
+    b.fillRect(-bw * 2, -bh * 2, bw * 4, bh * 4);
+    b.restore();
+  }
+
   function render() {
     var w = window.innerWidth, h = window.innerHeight;
     var dpr = Math.min(window.devicePixelRatio || 1, 2);
@@ -70,10 +102,10 @@
     canvas.style.width = w + 'px';
     canvas.style.height = h + 'px';
 
-    /* 低解像度バッファに構成を描く */
-    var scale = 0.18;
-    var bw = Math.max(80, Math.floor(w * scale));
-    var bh = Math.max(80, Math.floor(h * scale));
+    /* 低解像度バッファに構成を描く（ディテールを残すため少し高め） */
+    var scale = 0.22;
+    var bw = Math.max(90, Math.floor(w * scale));
+    var bh = Math.max(90, Math.floor(h * scale));
     var buf = document.createElement('canvas');
     buf.width = bw; buf.height = bh;
     var b = buf.getContext('2d');
@@ -83,27 +115,18 @@
     b.fillStyle = 'hsl(' + comp.baseHue + ',60%,5%)';
     b.fillRect(0, 0, bw, bh);
 
-    // 発光ブロブ（加算合成で暖色を積む）
+    // 発光（加算合成で暖色を積む）
     b.globalCompositeOperation = 'lighter';
-    comp.blobs.forEach(function (bl) {
-      var cx = bl.x * bw, cy = bl.y * bh, rr = bl.r * minSide;
-      var grd = b.createRadialGradient(cx, cy, 0, cx, cy, rr);
-      grd.addColorStop(0, bl.color + bl.alpha + ')');
-      grd.addColorStop(0.6, bl.color + (bl.alpha * 0.35) + ')');
-      grd.addColorStop(1, bl.color + '0)');
-      b.fillStyle = grd;
-      b.fillRect(0, 0, bw, bh);
+    comp.blobs.forEach(function (o) {
+      var base = 'hsla(' + o.h + ',' + o.s + '%,' + o.l + '%,';
+      paintBlob(b, o, bw, bh, minSide, base + o.a + ')', base + (o.a * 0.4) + ')');
     });
 
     // 暗部（谷）を彫る
     b.globalCompositeOperation = 'source-over';
-    comp.darks.forEach(function (dk) {
-      var cx = dk.x * bw, cy = dk.y * bh, rr = dk.r * minSide;
-      var grd = b.createRadialGradient(cx, cy, 0, cx, cy, rr);
-      grd.addColorStop(0, 'hsla(' + dk.hue + ',50%,' + dk.light + '%,' + dk.alpha + ')');
-      grd.addColorStop(1, 'hsla(' + dk.hue + ',50%,' + dk.light + '%,0)');
-      b.fillStyle = grd;
-      b.fillRect(0, 0, bw, bh);
+    comp.darks.forEach(function (o) {
+      var base = 'hsla(' + o.h + ',50%,' + o.l + '%,';
+      paintBlob(b, o, bw, bh, minSide, base + o.a + ')', base + (o.a * 0.5) + ')');
     });
 
     /* メインへ拡大転写（スムージング＋わずかなブラーでソフトに） */
@@ -111,7 +134,7 @@
     ctx.globalCompositeOperation = 'source-over';
     ctx.imageSmoothingEnabled = true;
     ctx.imageSmoothingQuality = 'high';
-    ctx.filter = 'blur(8px)';               // 対応環境のみ効く（未対応でも拡大で十分滑らか）
+    ctx.filter = 'blur(6px)';               // 対応環境のみ効く（未対応でも拡大で十分滑らか）
     ctx.drawImage(buf, -12, -12, w + 24, h + 24);
     ctx.filter = 'none';
 
@@ -119,7 +142,7 @@
     var vg = ctx.createRadialGradient(w * 0.5, h * 0.42, Math.min(w, h) * 0.22,
                                       w * 0.5, h * 0.52, Math.max(w, h) * 0.78);
     vg.addColorStop(0, 'rgba(0,0,0,0)');
-    vg.addColorStop(1, 'rgba(8,4,2,0.55)');
+    vg.addColorStop(1, 'rgba(8,4,2,0.42)');
     ctx.fillStyle = vg;
     ctx.fillRect(0, 0, w, h);
 
