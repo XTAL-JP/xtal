@@ -1,0 +1,229 @@
+/*
+ * XTAL 公式サイト — 前面テキストのスタイル。
+ * 背景（暖色グラデーション）は background.js が canvas に描画する。
+ * デザイン方針：背景を主役に、テキストはシンプル・可読性優先。
+ */
+
+:root {
+  --ink: #f5f1ea;            /* オフホワイト（本文） */
+  --ink-dim: rgba(245, 241, 234, 0.66);
+  --line: rgba(245, 241, 234, 0.18);
+  --maxw: 640px;
+  --shadow: 0 1px 2px rgba(0,0,0,0.55), 0 2px 22px rgba(0,0,0,0.45);
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+}
+
+* { box-sizing: border-box; }
+
+html, body { margin: 0; padding: 0; min-height: 100%; }
+
+body {
+  color: var(--ink);
+  overflow-x: hidden; /* 見出しの字間による横はみ出しを防ぐ */
+  /* JS/canvas が使えない場合の暖色フォールバック */
+  background: radial-gradient(120% 90% at 20% 15%, #f3a15c 0%, #c85a2b 35%, #3a1d12 70%, #120a07 100%);
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+}
+
+/* 背景 canvas（全画面固定） */
+#bg {
+  position: fixed;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  z-index: -2;
+  display: block;
+}
+
+/* 可読性のためのごく薄い暗幕（上下をわずかに落とす） */
+.scrim {
+  position: fixed;
+  inset: 0;
+  z-index: -1;
+  pointer-events: none;
+  background:
+    linear-gradient(180deg, rgba(0,0,0,0.28) 0%, rgba(0,0,0,0.05) 22%, rgba(0,0,0,0.05) 70%, rgba(0,0,0,0.38) 100%);
+}
+
+/* ---- レイアウト ---- */
+.wrap {
+  position: relative;
+  z-index: 1;
+  max-width: var(--maxw);
+  margin: 0 auto;
+  padding: clamp(48px, 12vh, 120px) 24px 72px;
+  text-align: center;
+  text-shadow: var(--shadow);
+}
+
+/* ---- ヒーロー ---- */
+.hero { margin-bottom: 40px; }
+
+.hero__name {
+  margin: 0;
+  font-size: clamp(44px, 13vw, 120px);
+  font-weight: 500;
+  letter-spacing: 0.18em;
+  line-height: 1;
+}
+
+.hero__tagline {
+  margin: 18px 0 0;
+  font-size: clamp(13px, 3.4vw, 16px);
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--ink-dim);
+}
+
+/* ---- ソーシャル導線 ---- */
+.links {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 8px 22px;
+  margin-bottom: 30px;
+}
+
+.link {
+  color: var(--ink);
+  text-decoration: none;
+  font-size: 14px;
+  letter-spacing: 0.06em;
+  padding: 4px 2px;
+  border-bottom: 1px solid transparent;
+  transition: border-color 0.2s ease, opacity 0.2s ease;
+}
+.link:hover { border-bottom-color: var(--ink); }
+
+/* ---- 注目リンク（リリース等） ---- */
+.releases {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 10px;
+  margin: 0 auto 8px;
+  max-width: 460px;
+}
+.release {
+  display: block;
+  width: 100%;
+  color: var(--ink);
+  text-decoration: none;
+  font-size: 14px;
+  letter-spacing: 0.04em;
+  padding: 12px 16px;
+  border: 1px solid var(--line);
+  border-radius: 2px;
+  background: rgba(0, 0, 0, 0.14);
+  transition: background 0.2s ease, border-color 0.2s ease;
+}
+.release:hover { background: rgba(0, 0, 0, 0.28); border-color: var(--ink); }
+
+/* ---- セクション共通 ---- */
+.section {
+  margin-top: 64px;
+  text-align: left;
+}
+.section__title {
+  font-size: 13px;
+  font-weight: 600;
+  letter-spacing: 0.28em;
+  text-transform: uppercase;
+  color: var(--ink-dim);
+  margin: 0 0 20px;
+  padding-bottom: 10px;
+  border-bottom: 1px solid var(--line);
+  text-align: center;
+}
+.sub {
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.24em;
+  text-transform: uppercase;
+  color: var(--ink-dim);
+  margin: 26px 0 12px;
+}
+
+/* ---- Biography ---- */
+.bio p {
+  margin: 0 0 12px;
+  font-size: 15px;
+  line-height: 1.85;
+  color: var(--ink);
+}
+
+/* ---- Schedule ---- */
+.events { list-style: none; margin: 0; padding: 0; }
+.ev {
+  padding: 16px 0;
+  border-bottom: 1px solid var(--line);
+}
+.ev__date {
+  font-size: 12px;
+  letter-spacing: 0.08em;
+  color: var(--ink-dim);
+  margin-bottom: 6px;
+}
+.ev__head { display: flex; align-items: baseline; flex-wrap: wrap; gap: 10px; }
+.ev__type {
+  font-size: 10px;
+  letter-spacing: 0.14em;
+  padding: 2px 7px;
+  border: 1px solid var(--line);
+  border-radius: 2px;
+  color: var(--ink-dim);
+}
+.ev__title { font-size: 17px; font-weight: 500; }
+.ev__place { font-size: 13px; color: var(--ink-dim); margin-top: 5px; }
+.ev__links { margin-top: 9px; display: flex; flex-wrap: wrap; gap: 8px 16px; }
+.ev__link {
+  font-size: 13px;
+  color: var(--ink);
+  text-decoration: none;
+  border-bottom: 1px solid var(--line);
+}
+.ev__link:hover { border-bottom-color: var(--ink); }
+.ev--past { opacity: 0.6; }
+
+/* ---- News ---- */
+.news-list { list-style: none; margin: 0; padding: 0; }
+.news__item {
+  padding: 16px 0;
+  border-bottom: 1px solid var(--line);
+}
+.news__date {
+  font-size: 12px;
+  letter-spacing: 0.08em;
+  color: var(--ink-dim);
+  margin-bottom: 6px;
+}
+.news__title { font-size: 16px; font-weight: 500; color: var(--ink); text-decoration: none; }
+a.news__title { border-bottom: 1px solid var(--line); }
+a.news__title:hover { border-bottom-color: var(--ink); }
+.news__body p { margin: 6px 0 0; font-size: 14px; line-height: 1.7; color: var(--ink-dim); }
+
+/* ---- フッター ---- */
+.foot {
+  margin-top: 72px;
+  padding-top: 24px;
+  border-top: 1px solid var(--line);
+  text-align: center;
+}
+.foot__copy {
+  margin-top: 14px;
+  font-size: 12px;
+  letter-spacing: 0.1em;
+  color: var(--ink-dim);
+}
+
+/* ---- レスポンシブ ---- */
+@media (max-width: 480px) {
+  .hero__name { letter-spacing: 0.1em; }
+  .hero__tagline { letter-spacing: 0.1em; }
+  .links { gap: 6px 16px; }
+  .link { font-size: 13px; }
+  .section { margin-top: 52px; }
+}
+
+/* アニメーションを控える設定でも背景は静止画なので影響なし */

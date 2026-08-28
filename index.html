@@ -1,0 +1,66 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>XTAL — DJ / Producer, Nagano Japan</title>
+  <meta name="description" content="XTAL — DJ and producer from Nagano, Japan. Links, biography, schedule and news." />
+
+  <!-- OGP -->
+  <meta property="og:type" content="website" />
+  <meta property="og:title" content="XTAL — DJ / Producer, Nagano Japan" />
+  <meta property="og:description" content="DJ and producer from Nagano, Japan." />
+  <meta property="og:url" content="https://xtal-jp.com/" />
+
+  <link rel="icon" href="assets/favicon.svg" type="image/svg+xml" />
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <!-- 背景：暖色系グラデーション（アクセス毎にランダム生成） -->
+  <canvas id="bg" aria-hidden="true"></canvas>
+  <!-- 可読性確保のためのごく薄い暗幕 -->
+  <div class="scrim" aria-hidden="true"></div>
+
+  <main class="wrap">
+    <!-- ヒーロー -->
+    <header class="hero">
+      <h1 class="hero__name" id="name">XTAL</h1>
+      <p class="hero__tagline" id="tagline">DJ / Producer — Nagano, Japan</p>
+    </header>
+
+    <!-- ソーシャル導線 -->
+    <nav class="links" id="socials" aria-label="Social links"></nav>
+
+    <!-- 注目リンク（リリース等） -->
+    <div class="releases" id="releases" aria-label="Releases"></div>
+
+    <!-- Biography -->
+    <section class="section" id="bio-section" aria-labelledby="bio-heading">
+      <h2 class="section__title" id="bio-heading">Biography</h2>
+      <div class="bio" id="bio"></div>
+    </section>
+
+    <!-- Schedule -->
+    <section class="section" id="schedule-section" aria-labelledby="schedule-heading">
+      <h2 class="section__title" id="schedule-heading">Schedule</h2>
+      <div id="schedule"></div>
+    </section>
+
+    <!-- News -->
+    <section class="section" id="news-section" aria-labelledby="news-heading">
+      <h2 class="section__title" id="news-heading">News</h2>
+      <div id="news"></div>
+    </section>
+
+    <footer class="foot" id="foot"></footer>
+  </main>
+
+  <noscript>
+    <div class="wrap"><p style="color:#f4f1ea">JavaScript を有効にすると、リンク・スケジュール・News が表示されます。</p></div>
+  </noscript>
+
+  <script src="background.js"></script>
+  <script src="data.js"></script>
+  <script src="main.js"></script>
+</body>
+</html>
