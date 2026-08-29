@@ -77,15 +77,12 @@ TEMPO Slider という DJ向けのブラウザ拡張機能（Chrome / Firefox）
     { date: '2026-11-01', title: 'Kata',                   city: 'Tokyo',    type: 'dj' },
     { date: '2026-11-21', title: 'Mago',                   city: 'Nagoya',   type: 'dj' },
     {
-      date: '2025-06-01',
-      title: 'SP-404MKII Jam',
-      venue: 'Curly Record',
-      city: '',
-      type: 'live',
-      links: [
-        { label: 'YouTube', url: 'https://www.youtube.com/@XTAL_JP' } // 要確認：該当動画URL
-      ]
-      // recording: 'https://soundcloud.com/xtal_jp/...'   // ← 録音を上げたら追記
+      date: '2026-08-21',
+      title: 'Photochemical Smog',
+      venue: 'Bar Himitsu',
+      city: 'Nagano',
+      type: 'dj',
+      recording: 'https://soundcloud.com/crystal-a/photochemical-smog-at-bar'
     }
     // 例）新しい予定を足すときは上に追記:
     // {
