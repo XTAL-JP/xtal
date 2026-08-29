@@ -179,11 +179,11 @@
     ctx.globalCompositeOperation = 'source-over';
     ctx.clearRect(0, 0, w, h);
 
-    // ゆっくりした揺らぎ（ズーム/ドリフト/微回転）— 視認できる程度に
-    var s   = 1.05 + 0.045 * Math.sin(t / 17000);
-    var px  = 0.075 * w * Math.sin(t / 22000);
-    var py  = 0.065 * h * Math.sin(t / 19000);
-    var rot = 0.016 * Math.sin(t / 27000);
+    // 揺らぎ（ズーム/ドリフト/微回転）— 速めに
+    var s   = 1.05 + 0.045 * Math.sin(t / 10000);
+    var px  = 0.075 * w * Math.sin(t / 13000);
+    var py  = 0.065 * h * Math.sin(t / 11000);
+    var rot = 0.016 * Math.sin(t / 16000);
 
     ctx.save();
     ctx.translate(w / 2 + px, h / 2 + py);
