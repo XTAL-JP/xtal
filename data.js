@@ -70,6 +70,12 @@ TEMPO Slider という DJ向けのブラウザ拡張機能（Chrome / Firefox）
    *   - type は "dj" か "live"。city / links / recording は任意。
    */
   schedule: [
+    { date: '2026-09-03', title: 'Bar Himitsu',            city: 'Nagano',   type: 'dj' },
+    { date: '2026-09-18', title: 'Solfa (as Traks Boys)',  city: 'Tokyo',    type: 'dj' },
+    { date: '2026-10-02', title: 'Mitsuki',                city: 'Tokyo',    type: 'dj' },
+    { date: '2026-10-03', title: 'Dende',                  city: 'Kanazawa', type: 'dj' },
+    { date: '2026-11-01', title: 'Kata',                   city: 'Tokyo',    type: 'dj' },
+    { date: '2026-11-21', title: 'Mago',                   city: 'Nagoya',   type: 'dj' },
     {
       date: '2025-06-01',
       title: 'SP-404MKII Jam',
@@ -152,8 +158,8 @@ TEMPO Slider という DJ向けのブラウザ拡張機能（Chrome / Firefox）
       cover: 'assets/discography/quiet-space.jpg',
       links: [
         { label: 'Bandcamp', url: 'https://xtal-jp.bandcamp.com/album/quiet-space-for-quiet-life-part-1-2' },
-        { label: 'Apple Music', url: 'https://music.apple.com/jp/album/quiet-space-for-quiet-life-pts-1-2-ep/1594347305' }
-        // Spotify は要確認（以前設定のIDは実際には Part.3&4 のものだった）
+        { label: 'Apple Music', url: 'https://music.apple.com/jp/album/quiet-space-for-quiet-life-pts-1-2-ep/1594347305' },
+        { label: 'Spotify', url: 'https://open.spotify.com/album/1N2e1jlChBhvY7efSF6MzL' }
       ]
     },
     {
