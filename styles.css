@@ -263,7 +263,7 @@ body {
   color: var(--ink-dim);
 }
 .ev__title { font-family: var(--display-font); font-size: 21px; font-weight: 600; letter-spacing: 0.02em; }
-.ev__at { font-family: var(--display-font); font-weight: 600; font-size: 0.72em; letter-spacing: 0.03em; color: var(--ink-dim); }
+.ev__at { font-family: var(--display-font); font-weight: 600; font-size: 0.88em; letter-spacing: 0.03em; color: var(--ink-dim); }
 .ev__place { font-size: 13px; color: var(--ink-dim); margin-top: 5px; }
 .ev__note { font-size: 12px; color: var(--ink-dim); font-style: italic; margin-top: 4px; }
 .ev__links { margin-top: 9px; display: flex; flex-wrap: wrap; gap: 8px 16px; }
