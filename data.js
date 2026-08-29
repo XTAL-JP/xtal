@@ -23,14 +23,14 @@ var DATA = {
 
   // 中央揃えのソーシャル導線
   socials: [
-    { label: 'Instagram',   url: 'https://www.instagram.com/_xtal_jp_' },
-    { label: 'X',           url: 'https://x.com/XTAL_JP' },
-    { label: 'TikTok',      url: 'https://www.tiktok.com/@xtal641' },
-    { label: 'YouTube',     url: 'https://www.youtube.com/@XTAL_JP' },
     { label: 'SoundCloud',  url: 'https://soundcloud.com/crystal-a' },
     { label: 'Bandcamp',    url: 'https://xtal-jp.bandcamp.com/' },
     { label: 'Spotify',     url: 'https://open.spotify.com/artist/2t07wCTjaVSrObNSvgMyLi' },
-    { label: 'Apple Music', url: 'https://music.apple.com/jp/artist/xtal/1510861367' }
+    { label: 'Apple Music', url: 'https://music.apple.com/jp/artist/xtal/1510861367' },
+    { label: 'Instagram',   url: 'https://www.instagram.com/_xtal_jp_' },
+    { label: 'X',           url: 'https://x.com/XTAL_JP' },
+    { label: 'TikTok',      url: 'https://www.tiktok.com/@xtal641' },
+    { label: 'YouTube',     url: 'https://www.youtube.com/@XTAL_JP' }
   ],
 
   // 注目リンク（リリース・拡張機能など。LinkTree のメインボタン相当）
