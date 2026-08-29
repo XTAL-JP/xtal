@@ -141,7 +141,7 @@ body {
 .release:hover { background: rgba(0, 0, 0, 0.28); border-color: var(--ink); }
 
 /* ---- Featured（今プッシュしたいもの） ---- */
-.featured { margin: 4px auto 8px; max-width: 560px; }
+.featured { margin: 52px auto 8px; max-width: 560px; }
 .post {
   text-align: left;
   border: 1px solid var(--line);
