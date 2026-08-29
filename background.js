@@ -87,7 +87,13 @@
         h: rand(10, 30), l: rand(3, 8), a: rand(0.7, 0.95)
       });
     }
-    return { blobs: blobs, darks: darks, baseHue: rand(12, 28) };
+    // 最低限の暖色アンビエント（暗すぎを防ぐフロア）
+    var amb = {
+      x: rand(0.30, 0.70), y: rand(0.32, 0.62),
+      r: rand(0.62, 0.95), hue: rand(15, 42),
+      l: rand(30, 38), a: rand(0.5, 0.66)
+    };
+    return { blobs: blobs, darks: darks, amb: amb, baseHue: rand(12, 28) };
   }
 
   var comp = buildComposition();
@@ -150,9 +156,23 @@
     var b = buf.getContext('2d');
     var minSide = Math.min(bw, bh);
 
-    b.fillStyle = 'hsl(' + comp.baseHue + ',60%,5%)';
+    b.fillStyle = 'hsl(' + comp.baseHue + ',58%,8%)';
     b.fillRect(0, 0, bw, bh);
+
+    // 暗すぎ防止：中央付近の柔らかい暖色アンビエント（フロア）
     b.globalCompositeOperation = 'lighter';
+    (function () {
+      var a = comp.amb;
+      var cx = a.x * bw, cy = a.y * bh, rr = a.r * Math.max(bw, bh);
+      var g = b.createRadialGradient(cx, cy, 0, cx, cy, rr);
+      var base = 'hsla(' + a.hue + ',80%,' + a.l + '%,';
+      g.addColorStop(0, base + a.a + ')');
+      g.addColorStop(0.6, base + (a.a * 0.4) + ')');
+      g.addColorStop(1, base + '0)');
+      b.fillStyle = g;
+      b.fillRect(0, 0, bw, bh);
+    })();
+
     comp.blobs.forEach(function (o) {
       var base = 'hsla(' + o.h + ',' + o.s + '%,' + o.l + '%,';
       paintBlob(b, o, bw, bh, minSide, base + o.a + ')', base + (o.a * 0.4) + ')');
