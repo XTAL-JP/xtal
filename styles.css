@@ -37,13 +37,17 @@ body {
   text-rendering: optimizeLegibility;
 }
 
-/* 背景 canvas（全画面固定） */
+/* 背景 canvas（全画面固定）
+   iOS Safari は「position:fixed かつ負の z-index」の要素を、html/body に
+   不透明な背景色があると背面に隠してしまう（＝canvasが消えて body の
+   フォールバックグラデが見える）。負の z-index を避け、スクリム・本文を
+   その上に積むことで回避する。 */
 #bg {
   position: fixed;
   inset: 0;
   width: 100%;
   height: 100%;
-  z-index: -2;
+  z-index: 0;
   display: block;
 }
 
@@ -51,7 +55,7 @@ body {
 .scrim {
   position: fixed;
   inset: 0;
-  z-index: -1;
+  z-index: 1;
   pointer-events: none;
   background:
     /* 中央（テキストが乗る帯）をやわらかく暗くする */
@@ -63,7 +67,7 @@ body {
 /* ---- レイアウト ---- */
 .wrap {
   position: relative;
-  z-index: 1;
+  z-index: 2;
   max-width: var(--maxw);
   margin: 0 auto;
   padding: clamp(24px, 5vh, 52px) 24px 72px;
