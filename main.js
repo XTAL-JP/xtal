@@ -40,7 +40,6 @@
   if (D.profile) {
     var P = D.profile;
     if (P.name) el('name').textContent = P.name;
-    if (P.pronounce) el('pronounce').textContent = P.pronounce; else el('pronounce').style.display = 'none';
     if (P.tagline) el('tagline').textContent = P.tagline;
 
     var html = '';

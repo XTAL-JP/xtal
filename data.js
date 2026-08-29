@@ -7,12 +7,11 @@
 var DATA = {
   profile: {
     name: 'XTAL',
-    pronounce: 'pronounced “Crystal”',
     tagline: 'DJ / Producer',
     photo: 'assets/xtal.jpg',
     // 英語バイオ（段落は空行で区切る）
     bio:
-      'Active since 1995, XTAL is a DJ and producer best known as one half of Traks Boys with k404 and resident of DK SOUND—a notorious rooftop rave pulsing above Kawasaki’s industrial skyline. He has also been active in several projects, including the band (((Ssssurrounddd))) with Jun Kamoda, a duo with Your Song Is Good guitarist Masatomo Yoshizawa, and a collaboration unit with dance-music producer Keita Sano, consistently releasing new material across these collaborations.\n\n' +
+      'Active since 1995, XTAL (pronounced “Crystal”) is a DJ and producer best known as one half of Traks Boys with k404 and resident of DK SOUND—a notorious rooftop rave pulsing above Kawasaki’s industrial skyline. He has also been active in several projects, including the band (((Ssssurrounddd))) with Jun Kamoda, a duo with Your Song Is Good guitarist Masatomo Yoshizawa, and a collaboration unit with dance-music producer Keita Sano, consistently releasing new material across these collaborations.\n\n' +
       'As a solo artist, XTAL released singles on Crue-L Records and Beats In Space Records before putting out his debut album Skygazer (2016, Crue-L Records), followed by Aburelu (2020, self-released on Cizima), and his third album EKO (2024, Kakubarhythm).\n\n' +
       'Grounded in club music yet free from stylistic boundaries, XTAL’s DJ sets and productions flexibly move between diverse genres and eras, revealing a sound that is both distinctive and timeless.',
     // 日本語バイオ（Biography セクションの「日本語」トグルで表示）

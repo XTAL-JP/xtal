@@ -84,13 +84,19 @@ body {
   color: var(--ink-dim);
 }
 
-/* ---- ソーシャル導線 ---- */
+/* ---- ソーシャル導線（ブラウザ幅100%・フルブリード） ---- */
 .links {
   display: flex;
   flex-wrap: wrap;
-  justify-content: center;
-  gap: 8px 22px;
+  justify-content: space-between;
+  align-items: center;
+  gap: 10px 20px;
   margin-bottom: 30px;
+  /* 中央カラム(.wrap)を突き抜けて画面幅いっぱいに広げる */
+  width: 100vw;
+  margin-left: calc(50% - 50vw);
+  margin-right: calc(50% - 50vw);
+  padding: 0 clamp(20px, 5vw, 64px);
 }
 
 .link {
@@ -260,6 +266,9 @@ a.news__title:hover { border-bottom-color: var(--ink); }
 }
 
 /* ---- レスポンシブ ---- */
+@media (max-width: 560px) {
+  .links { justify-content: center; }
+}
 @media (max-width: 480px) {
   .hero__name { letter-spacing: 0.1em; }
   .hero__tagline { letter-spacing: 0.1em; }
