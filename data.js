@@ -174,7 +174,8 @@ TEMPO Slider という DJ向けのブラウザ拡張機能（Chrome / Firefox）
       title: 'LIVE ESQUISSE at Lake Nojiri', year: 2022, note: 'Masatomo Yoshizawa, XTAL',
       cover: 'assets/discography/live-esquisse-nojiri.jpg',
       links: [
-        { label: 'Kakubarhythm', url: 'https://kakubarhythm.com/discography/post/10119' }
+        { label: 'Apple Music', url: 'https://music.apple.com/jp/album/live-esquisse-at-lake-nojiri/1626769124' },
+        { label: 'Spotify', url: 'https://open.spotify.com/album/0W1CVpNASZaxyJWMCXZEuB' }
       ]
     },
     {
