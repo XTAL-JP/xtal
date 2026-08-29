@@ -44,20 +44,20 @@ var DATA = {
       type: 'post',
       date: '2026-06-27',
       title: 'TEMPO Slider — Browser Extension for DJs',
+      image: 'assets/featured/tempo-slider.jpg',
       body:
-`TEMPO Slider という DJ向けのブラウザ拡張機能（Chrome / Firefox）を公開しました。ネットで試聴する時に、実際にDJでプレイする時のように、テンポを変更した状態で検討したいと思い、制作しました。
+`Just released a browser extension for DJs called TEMPO Slider (Chrome / Firefox). I built this because I wanted to audition tracks online at the same tempo I'd actually play them at in a set.
 
-対応サイト：Bandcamp / Beatport / Traxsource / Discogs（YouTube 試聴）ほか、任意のサイトを追加可能。Chrome / Firefox 対応・無料・オープンソース。DJ の方、ぜひ使ってみてください。フィードバックもお待ちしてます。
+Supported sites: Bandcamp / Beatport / Traxsource / Discogs (YouTube previews), plus any other site you add. Chrome / Firefox · free · open source. DJs, give it a try — feedback welcome!
 
 ————
 
-Just released a browser extension for DJs called TEMPO Slider (Chrome / Firefox). I built this because I wanted to audition tracks online at the same tempo I'd actually play them at in a set.
+TEMPO Slider という DJ向けのブラウザ拡張機能（Chrome / Firefox）を公開しました。ネットで試聴する時に、実際にDJでプレイする時のように、テンポを変更した状態で検討したいと思い、制作しました。
 
-Supported sites: Bandcamp / Beatport / Traxsource / Discogs (YouTube previews), plus any other site you add. Chrome / Firefox · free · open source. DJs, give it a try — feedback welcome!`,
+対応サイト：Bandcamp / Beatport / Traxsource / Discogs（YouTube 試聴）ほか、任意のサイトを追加可能。Chrome / Firefox 対応・無料・オープンソース。DJ の方、ぜひ使ってみてください。フィードバックもお待ちしてます。`,
       links: [
-        { label: 'Chrome',    url: 'https://chromewebstore.google.com/detail/tempo-slider/khfoddahloneinahhnejjpjengdaglcl' },
-        { label: 'Firefox',   url: 'https://addons.mozilla.org/ja/firefox/addon/tempo-slider/' },
-        { label: 'Instagram', url: 'https://www.instagram.com/p/DaHHpa1ElQ6/' }
+        { label: 'Chrome',  url: 'https://chromewebstore.google.com/detail/tempo-slider/khfoddahloneinahhnejjpjengdaglcl' },
+        { label: 'Firefox', url: 'https://addons.mozilla.org/ja/firefox/addon/tempo-slider/' }
       ]
     }
   ],
