@@ -148,6 +148,30 @@
     el('news-section').style.display = 'none';
   }
 
+  /* ---- Discography ---- */
+  if (D.discography && D.discography.length) {
+    el('discography').innerHTML = '<ul class="disco-grid">' + D.discography.map(function (r) {
+      var links = (r.links || []).map(function (l) {
+        return link(l.url, l.label, 'disco__link');
+      }).join('');
+      var cover = r.cover
+        ? '<img class="disco__cover" src="' + esc(r.cover) + '" alt="' + esc(r.title || '') +
+          '" width="400" height="400" loading="lazy" />'
+        : '';
+      return '<li class="disco__item">' +
+        cover +
+        '<div class="disco__title">' + esc(r.title || '') + '</div>' +
+        '<div class="disco__meta">' +
+          (r.year ? '<span class="disco__year">' + esc(r.year) + '</span>' : '') +
+          (r.note ? '<span class="disco__note">' + esc(r.note) + '</span>' : '') +
+        '</div>' +
+        (links ? '<div class="disco__links">' + links + '</div>' : '') +
+        '</li>';
+    }).join('') + '</ul>';
+  } else {
+    el('disco-section').style.display = 'none';
+  }
+
   /* ---- フッター ---- */
   var year = new Date().getFullYear();
   var footHtml = '';

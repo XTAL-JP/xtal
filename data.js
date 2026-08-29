@@ -81,6 +81,81 @@ var DATA = {
     }
   ],
 
+  /*
+   * Discography（新しい順）。Bandcamp 掲載作を収録。
+   *   - links には Bandcamp を必ず、ストリーミング（Spotify/Apple 等）がある場合は追加。
+   *   - ※ streaming が空の作品は、正しいストリーミングURLが分かれば links に追記してください。
+   *   - cover は assets/discography/ 内の画像。note は共作相手など補足（任意）。
+   */
+  discography: [
+    {
+      title: 'Voices', year: 2025, note: 'XTAL / Inner Science',
+      cover: 'assets/discography/voices.jpg',
+      links: [
+        { label: 'Bandcamp', url: 'https://xtal-jp.bandcamp.com/album/voices' },
+        { label: 'Streaming', url: 'https://album.link/i/1810029937' }
+      ]
+    },
+    {
+      title: 'EKO', year: 2024, note: 'Kakubarhythm',
+      cover: 'assets/discography/eko.jpg',
+      links: [
+        { label: 'Bandcamp', url: 'https://xtal-jp.bandcamp.com/album/eko' },
+        { label: 'Streaming', url: 'https://kakubarhythm.lnk.to/EKO' }
+      ]
+    },
+    {
+      title: 'CROSSING PARK Part.1 & 2', year: 2023,
+      cover: 'assets/discography/crossing-park.jpg',
+      links: [
+        { label: 'Bandcamp', url: 'https://xtal-jp.bandcamp.com/album/crossing-park-part-1-2' }
+        // { label: 'Spotify', url: '' }  // ← ストリーミングにあれば追記
+      ]
+    },
+    {
+      title: 'Lost And Found (Extended Version)', year: 2022, note: '(((さらうんど)))',
+      cover: 'assets/discography/lost-and-found.jpg',
+      links: [
+        { label: 'Bandcamp', url: 'https://xtal-jp.bandcamp.com/album/lost-and-found-extended-version' }
+      ]
+    },
+    {
+      title: 'Crazy Fool / Days New', year: 2022,
+      cover: 'assets/discography/crazy-fool.jpg',
+      links: [
+        { label: 'Bandcamp', url: 'https://xtal-jp.bandcamp.com/album/crazy-fool-days-new' }
+      ]
+    },
+    {
+      title: 'QUIET SPACE FOR QUIET LIFE Part.1 & 2', year: 2021,
+      cover: 'assets/discography/quiet-space.jpg',
+      links: [
+        { label: 'Bandcamp', url: 'https://xtal-jp.bandcamp.com/album/quiet-space-for-quiet-life-part-1-2' }
+      ]
+    },
+    {
+      title: 'Aburelu', year: 2020, note: 'Cizima',
+      cover: 'assets/discography/aburelu.jpg',
+      links: [
+        { label: 'Bandcamp', url: 'https://xtal-jp.bandcamp.com/album/aburelu' }
+      ]
+    },
+    {
+      title: 'Green Days / Steps On The Wind', year: 2020, note: 'Gonno, XTAL, Inner Science',
+      cover: 'assets/discography/green-days.jpg',
+      links: [
+        { label: 'Bandcamp', url: 'https://xtal-jp.bandcamp.com/album/green-days-steps-on-the-wind' }
+      ]
+    },
+    {
+      title: 'Skygazer', year: 2016, note: 'Crue-L Records',
+      cover: 'assets/discography/skygazer.jpg',
+      links: [
+        { label: 'Bandcamp', url: 'https://xtal-jp.bandcamp.com/album/skygazer' }
+      ]
+    }
+  ],
+
   // フッターに出す連絡先（任意）。※要確認：正しい連絡先に
   contact: { label: 'Contact', url: 'mailto:contact@xtal-jp.com' }
 };
