@@ -18,7 +18,15 @@
 
 * { box-sizing: border-box; }
 
-html, body { margin: 0; padding: 0; min-height: 100%; }
+html, body {
+  margin: 0;
+  padding: 0;
+  min-height: 100%;
+  /* iOS Safari はステータスバー下・下部ツールバー背後の領域（セーフエリア/
+     オーバースクロール部）を background-image ではなく単色の background-color で
+     塗るため、暗い単色を敷いて上下の白い帯が出ないようにする */
+  background-color: #120a07;
+}
 
 body {
   color: var(--ink);
