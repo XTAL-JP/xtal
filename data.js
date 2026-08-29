@@ -113,6 +113,14 @@ TEMPO Slider という DJ向けのブラウザ拡張機能（Chrome / Firefox）
       ]
     },
     {
+      title: 'QUIET SPACE FOR QUIET LIFE Part.3 & 4', year: 2023,
+      cover: 'assets/discography/quiet-space-2.jpg',
+      links: [
+        { label: 'Apple Music', url: 'https://music.apple.com/jp/album/quiet-space-for-quiet-life-pt-3-4-ep/1720137732' },
+        { label: 'Spotify', url: 'https://open.spotify.com/album/1pwQGSXQWBJUNHMhGaNP9j' }
+      ]
+    },
+    {
       title: 'CROSSING PARK Part.1 & 2', year: 2023,
       cover: 'assets/discography/crossing-park.jpg',
       links: [
@@ -144,8 +152,8 @@ TEMPO Slider という DJ向けのブラウザ拡張機能（Chrome / Firefox）
       cover: 'assets/discography/quiet-space.jpg',
       links: [
         { label: 'Bandcamp', url: 'https://xtal-jp.bandcamp.com/album/quiet-space-for-quiet-life-part-1-2' },
-        { label: 'Apple Music', url: 'https://music.apple.com/jp/album/quiet-space-for-quiet-life-pts-1-2-ep/1594347305' },
-        { label: 'Spotify', url: 'https://open.spotify.com/album/1pwQGSXQWBJUNHMhGaNP9j' }
+        { label: 'Apple Music', url: 'https://music.apple.com/jp/album/quiet-space-for-quiet-life-pts-1-2-ep/1594347305' }
+        // Spotify は要確認（以前設定のIDは実際には Part.3&4 のものだった）
       ]
     },
     {
