@@ -6,10 +6,10 @@
 
 :root {
   --ink: #f5f1ea;            /* オフホワイト（本文） */
-  --ink-dim: rgba(245, 241, 234, 0.66);
+  --ink-dim: rgba(245, 241, 234, 0.72);
   --line: rgba(245, 241, 234, 0.18);
   --maxw: 640px;
-  --shadow: 0 1px 2px rgba(0,0,0,0.55), 0 2px 22px rgba(0,0,0,0.45);
+  --shadow: 0 1px 2px rgba(0,0,0,0.62), 0 0 12px rgba(0,0,0,0.5), 0 2px 26px rgba(0,0,0,0.4);
   /* 本文＝Barlow（素直なグロテスク）／見出し＝Big Shoulders Display（インダストリアル） */
   --body-font: 'Barlow', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
   --display-font: 'Big Shoulders Display', 'Barlow', Impact, sans-serif;
@@ -39,14 +39,17 @@ body {
   display: block;
 }
 
-/* 可読性のためのごく薄い暗幕（上下をわずかに落とす） */
+/* 可読性のための暗幕（上下＋中央の帯をわずかに落とし、明るい背景でも文字を読めるように） */
 .scrim {
   position: fixed;
   inset: 0;
   z-index: -1;
   pointer-events: none;
   background:
-    linear-gradient(180deg, rgba(0,0,0,0.28) 0%, rgba(0,0,0,0.05) 22%, rgba(0,0,0,0.05) 70%, rgba(0,0,0,0.38) 100%);
+    /* 中央（テキストが乗る帯）をやわらかく暗くする */
+    radial-gradient(150% 82% at 50% 46%, rgba(0,0,0,0.22) 0%, rgba(0,0,0,0.08) 50%, rgba(0,0,0,0) 74%),
+    /* 上下と全体のごく薄いベール */
+    linear-gradient(180deg, rgba(0,0,0,0.34) 0%, rgba(0,0,0,0.12) 20%, rgba(0,0,0,0.12) 70%, rgba(0,0,0,0.42) 100%);
 }
 
 /* ---- レイアウト ---- */

@@ -21,7 +21,7 @@
     if (r < 0.57)  return { h: rand(22, 36),   s: rand(90, 100), l: rand(50, 60) };   // オレンジ
     if (r < 0.71)  return { h: rand(36, 46),   s: rand(88, 100), l: rand(54, 64) };   // アンバー
     if (r < 0.80)  return { h: rand(38, 46),   s: rand(80, 92),  l: rand(50, 58) };   // ゴールド（アンバー寄り）
-    if (r < 0.90)  return { h: rand(28, 44),   s: rand(65, 88),  l: rand(64, 74) };   // ピーチ/クリーム
+    if (r < 0.90)  return { h: rand(28, 44),   s: rand(65, 88),  l: rand(62, 70) };   // ピーチ/クリーム
     if (r < 0.96)  return { h: rand(335, 352), s: rand(70, 88),  l: rand(56, 66) };   // ローズ/ピンク
     return { h: rand(292, 320), s: rand(60, 80), l: rand(54, 64) };                   // 稀：バイオレット/マゼンタ
   }
@@ -36,7 +36,7 @@
       blobs.push({
         x: rand(-0.15, 1.15), y: rand(-0.15, 1.15),
         r: rand(0.30, 0.62), rot: rand(0, Math.PI), stretch: rand(1.0, 2.6),
-        h: c.h, s: c.s, l: c.l, a: rand(0.45, 0.78)
+        h: c.h, s: c.s, l: c.l, a: rand(0.42, 0.72)
       });
     }
     // 細かいディテール層（小さめ・数多く）
@@ -46,7 +46,7 @@
       blobs.push({
         x: rand(0, 1), y: rand(0, 1),
         r: rand(0.10, 0.26), rot: rand(0, Math.PI), stretch: rand(1.0, 2.2),
-        h: c.h, s: c.s, l: Math.min(c.l + 4, 82), a: rand(0.35, 0.6)
+        h: c.h, s: c.s, l: Math.min(c.l + 4, 78), a: rand(0.32, 0.55)
       });
     }
     // 暗部（谷）— 深い黒でコントラストと複雑性を出す
