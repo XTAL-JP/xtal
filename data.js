@@ -163,6 +163,10 @@ TEMPO Slider という DJ向けのブラウザ拡張機能（Chrome / Firefox）
     }
   ],
 
-  // フッターに出す連絡先（任意）。label を変えれば文言も変わります。
-  contact: { label: 'Get in Touch', url: 'mailto:contact@xtal-jp.com' }
+  // 連絡先（Contact セクション）。note が説明文、label がボタン文言。
+  contact: {
+    label: 'Get in Touch',
+    url: 'mailto:contact@xtal-jp.com',
+    note: 'For DJ bookings, live shows, remixes, and collaborations — feel free to reach out.'
+  }
 };

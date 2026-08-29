@@ -179,12 +179,17 @@
     el('disco-section').style.display = 'none';
   }
 
-  /* ---- フッター ---- */
-  var year = new Date().getFullYear();
-  var footHtml = '';
+  /* ---- Contact（Get in Touch） ---- */
   if (D.contact && D.contact.url) {
-    footHtml += '<a class="contact-cta" href="' + esc(D.contact.url) + '">' + esc(D.contact.label || 'Contact') + '</a>';
+    var c = D.contact;
+    el('contact').innerHTML =
+      (c.note ? '<p class="contact__note">' + esc(c.note) + '</p>' : '') +
+      '<a class="contact-cta" href="' + esc(c.url) + '">' + esc(c.label || 'Contact') + '</a>';
+  } else {
+    el('contact-section').style.display = 'none';
   }
-  footHtml += '<div class="foot__copy">© ' + year + ' XTAL</div>';
-  el('foot').innerHTML = footHtml;
+
+  /* ---- フッター（コピーライトのみ） ---- */
+  var year = new Date().getFullYear();
+  el('foot').innerHTML = '<div class="foot__copy">© ' + year + ' XTAL</div>';
 })();
