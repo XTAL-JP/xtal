@@ -71,7 +71,7 @@ TEMPO Slider という DJ向けのブラウザ拡張機能（Chrome / Firefox）
    */
   schedule: [
     { date: '2026-09-03', title: 'Bar Himitsu',            city: 'Nagano',   type: 'dj' },
-    { date: '2026-09-18', title: 'Solfa (as Traks Boys)',  city: 'Tokyo',    type: 'dj' },
+    { date: '2026-09-18', title: 'Solfa', city: 'Tokyo', type: 'dj', note: 'as Traks Boys' },
     { date: '2026-10-02', title: 'Mitsuki',                city: 'Tokyo',    type: 'dj' },
     { date: '2026-10-03', title: 'Dende',                  city: 'Kanazawa', type: 'dj' },
     { date: '2026-11-01', title: 'Kata',                   city: 'Tokyo',    type: 'dj' },

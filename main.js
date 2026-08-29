@@ -122,6 +122,7 @@
 
     var place = [ev.venue, ev.city].filter(Boolean).map(esc).join(' · ');
     if (place) parts.push('<div class="ev__place">' + place + '</div>');
+    if (ev.note) parts.push('<div class="ev__note">' + esc(ev.note) + '</div>');
 
     var links = [];
     if (ev.recording) links.push(link(ev.recording, '▶ Recording', 'ev__link'));
