@@ -99,7 +99,7 @@ body {
   flex-wrap: wrap;
   justify-content: center;
   align-items: center;
-  gap: 10px 28px;
+  gap: 4px 28px;
   margin-bottom: 30px;
   /* 中央カラム(.wrap)を突き抜けて画面幅いっぱいに広げ、項目は中央揃え */
   width: 100vw;
@@ -378,7 +378,7 @@ a.news__title:hover { border-bottom-color: var(--ink); }
 @media (max-width: 480px) {
   .hero__name { letter-spacing: 0.06em; }
   .hero__tagline { letter-spacing: 0.16em; }
-  .links { gap: 6px 16px; }
+  .links { gap: 3px 16px; }
   .link { font-size: 13px; }
 }
 
