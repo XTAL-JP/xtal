@@ -70,6 +70,7 @@ TEMPO Slider という DJ向けのブラウザ拡張機能（Chrome / Firefox）
    *   - type は "dj" か "live"。city / links / recording は任意。
    */
   schedule: [
+    { date: '2026-08-29', title: 'MY',                     city: 'Tokyo',    type: 'dj' },
     { date: '2026-09-03', title: 'Bar Himitsu',            city: 'Nagano',   type: 'dj' },
     { date: '2026-09-18', title: 'Solfa', city: 'Tokyo', type: 'dj', note: 'as Traks Boys' },
     { date: '2026-10-02', title: 'Mitsuki',                city: 'Tokyo',    type: 'dj' },
@@ -132,6 +133,21 @@ TEMPO Slider という DJ向けのブラウザ拡張機能（Chrome / Firefox）
       ]
     },
     {
+      title: 'Tangle', year: 2023, note: 'Masatomo Yoshizawa',
+      cover: 'assets/discography/tangle.jpg',
+      links: [
+        { label: 'Streaming', url: 'https://kakubarhythm.lnk.to/Tangle' },
+        { label: 'Bandcamp', url: 'https://masatomoyoshizawa.bandcamp.com/album/tangle' }
+      ]
+    },
+    {
+      title: 'LIVE ESQUISSE at TEMPO', year: 2023, note: 'Masatomo Yoshizawa',
+      cover: 'assets/discography/live-esquisse-tempo.jpg',
+      links: [
+        { label: 'Bandcamp', url: 'https://masatomoyoshizawa.bandcamp.com/album/live-esquisse-at-tempo' }
+      ]
+    },
+    {
       title: 'CROSSING PARK Part.1 & 2', year: 2023,
       cover: 'assets/discography/crossing-park.jpg',
       links: [
@@ -150,6 +166,27 @@ TEMPO Slider という DJ向けのブラウザ拡張機能（Chrome / Firefox）
       ]
     },
     {
+      title: 'Playing Nowhere', year: 2022, note: 'Masatomo Yoshizawa',
+      cover: 'assets/discography/playing-nowhere.jpg',
+      links: [
+        { label: 'Streaming', url: 'https://kakubarhythm.lnk.to/PlayingNowhere' }
+      ]
+    },
+    {
+      title: 'Happy In The Rain', year: 2022, note: 'Masatomo Yoshizawa',
+      cover: 'assets/discography/happy-in-the-rain.jpg',
+      links: [
+        { label: 'Streaming', url: 'https://kakubarhythm.lnk.to/HITR' }
+      ]
+    },
+    {
+      title: 'LIVE ESQUISSE at Lake Nojiri', year: 2022, note: 'Masatomo Yoshizawa',
+      cover: 'assets/discography/live-esquisse-nojiri.jpg',
+      links: [
+        { label: 'Kakubarhythm', url: 'https://kakubarhythm.com/discography/post/10119' }
+      ]
+    },
+    {
       title: 'Crazy Fool / Days New', year: 2022,
       cover: 'assets/discography/crazy-fool.jpg',
       links: [
@@ -165,6 +202,13 @@ TEMPO Slider という DJ向けのブラウザ拡張機能（Chrome / Firefox）
         { label: 'Bandcamp', url: 'https://xtal-jp.bandcamp.com/album/quiet-space-for-quiet-life-part-1-2' },
         { label: 'Apple Music', url: 'https://music.apple.com/jp/album/quiet-space-for-quiet-life-pts-1-2-ep/1594347305' },
         { label: 'Spotify', url: 'https://open.spotify.com/album/1N2e1jlChBhvY7efSF6MzL' }
+      ]
+    },
+    {
+      title: 'Guitar Esquisse Volume One', year: 2021, note: 'Masatomo Yoshizawa',
+      cover: 'assets/discography/guitar-esquisse.jpg',
+      links: [
+        { label: 'Kakubarhythm', url: 'https://kakubarhythm.com/discography/post/9398' }
       ]
     },
     {
