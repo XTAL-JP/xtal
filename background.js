@@ -16,19 +16,22 @@
   /* 暖色を中心に、色数を増やしたパレットからピック（アクセントに寒色も少量） */
   function pickColor() {
     var r = Math.random();
-    // 暖色（約78%）— 明度の上限を抑えて白飛びを防ぐ
-    if (r < 0.14)  return { h: rand(0, 10),    s: rand(85, 98),  l: rand(46, 55) };   // 赤
-    if (r < 0.30)  return { h: rand(10, 22),   s: rand(88, 100), l: rand(48, 57) };   // コーラル
-    if (r < 0.46)  return { h: rand(22, 34),   s: rand(90, 100), l: rand(46, 55) };   // オレンジ
-    if (r < 0.58)  return { h: rand(34, 44),   s: rand(85, 98),  l: rand(48, 56) };   // アンバー
-    if (r < 0.66)  return { h: rand(40, 50),   s: rand(80, 92),  l: rand(50, 58) };   // ゴールド
-    if (r < 0.72)  return { h: rand(28, 44),   s: rand(65, 88),  l: rand(54, 62) };   // ピーチ/クリーム
-    if (r < 0.78)  return { h: rand(335, 352), s: rand(70, 88),  l: rand(52, 60) };   // ローズ
-    // アクセント（約22%）— 色のバリエーション
-    if (r < 0.86)  return { h: rand(300, 330), s: rand(60, 82),  l: rand(52, 60) };   // マゼンタ/パープル
-    if (r < 0.91)  return { h: rand(255, 285), s: rand(55, 75),  l: rand(52, 60) };   // バイオレット/インディゴ
-    if (r < 0.965) return { h: rand(190, 215), s: rand(60, 82),  l: rand(48, 58) };   // シアン/ブルー
-    return         { h: rand(150, 175), s: rand(55, 75),  l: rand(46, 56) };          // ティール/グリーン
+    // 暖色（約70%）— 明度の上限を抑えて白飛びを防ぐ
+    if (r < 0.13)  return { h: rand(0, 10),    s: rand(85, 98),  l: rand(46, 55) };   // 赤
+    if (r < 0.28)  return { h: rand(10, 22),   s: rand(88, 100), l: rand(48, 57) };   // コーラル
+    if (r < 0.43)  return { h: rand(22, 34),   s: rand(90, 100), l: rand(46, 55) };   // オレンジ
+    if (r < 0.54)  return { h: rand(34, 44),   s: rand(85, 98),  l: rand(48, 56) };   // アンバー
+    if (r < 0.62)  return { h: rand(40, 50),   s: rand(80, 92),  l: rand(50, 58) };   // ゴールド
+    if (r < 0.68)  return { h: rand(28, 44),   s: rand(65, 88),  l: rand(54, 62) };   // ピーチ/クリーム
+    if (r < 0.72)  return { h: rand(335, 352), s: rand(70, 88),  l: rand(52, 60) };   // ローズ
+    // アクセント（約30%）— 色数を増やす
+    if (r < 0.79)  return { h: rand(305, 330), s: rand(60, 82),  l: rand(52, 60) };   // マゼンタ
+    if (r < 0.84)  return { h: rand(275, 300), s: rand(55, 78),  l: rand(52, 60) };   // パープル
+    if (r < 0.885) return { h: rand(250, 275), s: rand(52, 74),  l: rand(52, 60) };   // インディゴ/バイオレット
+    if (r < 0.925) return { h: rand(215, 245), s: rand(55, 78),  l: rand(50, 60) };   // ブルー
+    if (r < 0.96)  return { h: rand(185, 210), s: rand(58, 80),  l: rand(48, 58) };   // シアン/アズール
+    if (r < 0.985) return { h: rand(165, 185), s: rand(55, 76),  l: rand(46, 56) };   // ティール
+    return         { h: rand(140, 165), s: rand(52, 74),  l: rand(46, 56) };          // グリーン
   }
 
   /* このロードで1回だけランダムな配色構成を決める（resize では変えない） */
@@ -45,23 +48,33 @@
       });
     }
     // 中くらいのディテール層（数多く）
-    var m = Math.floor(rand(6, 10));
+    var m = Math.floor(rand(7, 11));
     for (i = 0; i < m; i++) {
       c = pickColor();
       blobs.push({
         x: rand(0, 1), y: rand(0, 1),
         r: rand(0.10, 0.26), rot: rand(0, Math.PI), stretch: rand(1.0, 2.4),
-        h: c.h, s: c.s, l: Math.min(c.l + 2, 68), a: rand(0.26, 0.44)
+        h: c.h, s: c.s, l: Math.min(c.l + 2, 68), a: rand(0.24, 0.42)
       });
     }
     // 極小のフィラメント層（複雑さの粒立ちを追加）
-    var k = Math.floor(rand(6, 11));
+    var k = Math.floor(rand(8, 14));
     for (i = 0; i < k; i++) {
       c = pickColor();
       blobs.push({
         x: rand(-0.05, 1.05), y: rand(-0.05, 1.05),
         r: rand(0.05, 0.14), rot: rand(0, Math.PI), stretch: rand(1.4, 3.4),
-        h: c.h, s: c.s, l: Math.min(c.l + 3, 70), a: rand(0.22, 0.38)
+        h: c.h, s: c.s, l: Math.min(c.l + 3, 70), a: rand(0.20, 0.36)
+      });
+    }
+    // 細長いストローク層（画面を横切る筋で構造的な複雑さを追加）
+    var st = Math.floor(rand(3, 6));
+    for (i = 0; i < st; i++) {
+      c = pickColor();
+      blobs.push({
+        x: rand(0, 1), y: rand(0, 1),
+        r: rand(0.06, 0.12), rot: rand(0, Math.PI), stretch: rand(3.5, 7.0),
+        h: c.h, s: c.s, l: c.l, a: rand(0.18, 0.32)
       });
     }
     // 暗部（谷）— 深い黒でコントラストと複雑性を出す
