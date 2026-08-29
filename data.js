@@ -200,7 +200,8 @@ TEMPO Slider という DJ向けのブラウザ拡張機能（Chrome / Firefox）
       title: 'Guitar Esquisse Volume One', year: 2021, note: 'Masatomo Yoshizawa, XTAL',
       cover: 'assets/discography/guitar-esquisse.jpg',
       links: [
-        { label: 'Kakubarhythm', url: 'https://kakubarhythm.com/discography/post/9398' }
+        { label: 'Apple Music', url: 'https://music.apple.com/jp/album/guitar-esquisse-volume-one/1581365658' },
+        { label: 'Spotify', url: 'https://open.spotify.com/album/65gNo2Y6rjpV7VIrTVkUw2' }
       ]
     },
     {
