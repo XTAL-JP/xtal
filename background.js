@@ -118,7 +118,7 @@
     canvas.style.height = h + 'px';
 
     /* 低解像度バッファに構成を描く（ディテールを残すため少し高め） */
-    var scale = 0.24;
+    var scale = 0.30;
     var bw = Math.max(90, Math.floor(w * scale));
     var bh = Math.max(90, Math.floor(h * scale));
     var buf = document.createElement('canvas');
@@ -149,7 +149,7 @@
     ctx.globalCompositeOperation = 'source-over';
     ctx.imageSmoothingEnabled = true;
     ctx.imageSmoothingQuality = 'high';
-    ctx.filter = 'blur(6px)';               // 対応環境のみ効く（未対応でも拡大で十分滑らか）
+    ctx.filter = 'blur(3.5px)';             // 弱めのブラーで輪郭を残しつつ滑らかに
     ctx.drawImage(buf, -12, -12, w + 24, h + 24);
     ctx.filter = 'none';
 
