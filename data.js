@@ -133,7 +133,7 @@ TEMPO Slider という DJ向けのブラウザ拡張機能（Chrome / Firefox）
       ]
     },
     {
-      title: 'Tangle', year: 2023, note: 'Masatomo Yoshizawa',
+      title: 'Tangle', year: 2023, note: 'Masatomo Yoshizawa, XTAL',
       cover: 'assets/discography/tangle.jpg',
       links: [
         { label: 'Streaming', url: 'https://kakubarhythm.lnk.to/Tangle' },
@@ -141,7 +141,7 @@ TEMPO Slider という DJ向けのブラウザ拡張機能（Chrome / Firefox）
       ]
     },
     {
-      title: 'LIVE ESQUISSE at TEMPO', year: 2023, note: 'Masatomo Yoshizawa',
+      title: 'LIVE ESQUISSE at TEMPO', year: 2023, note: 'Masatomo Yoshizawa, XTAL',
       cover: 'assets/discography/live-esquisse-tempo.jpg',
       links: [
         { label: 'Bandcamp', url: 'https://masatomoyoshizawa.bandcamp.com/album/live-esquisse-at-tempo' }
@@ -157,21 +157,21 @@ TEMPO Slider という DJ向けのブラウザ拡張機能（Chrome / Firefox）
       ]
     },
     {
-      title: 'Playing Nowhere', year: 2022, note: 'Masatomo Yoshizawa',
+      title: 'Playing Nowhere', year: 2022, note: 'Masatomo Yoshizawa, XTAL',
       cover: 'assets/discography/playing-nowhere.jpg',
       links: [
         { label: 'Streaming', url: 'https://kakubarhythm.lnk.to/PlayingNowhere' }
       ]
     },
     {
-      title: 'Happy In The Rain', year: 2022, note: 'Masatomo Yoshizawa',
+      title: 'Happy In The Rain', year: 2022, note: 'Masatomo Yoshizawa, XTAL',
       cover: 'assets/discography/happy-in-the-rain.jpg',
       links: [
         { label: 'Streaming', url: 'https://kakubarhythm.lnk.to/HITR' }
       ]
     },
     {
-      title: 'LIVE ESQUISSE at Lake Nojiri', year: 2022, note: 'Masatomo Yoshizawa',
+      title: 'LIVE ESQUISSE at Lake Nojiri', year: 2022, note: 'Masatomo Yoshizawa, XTAL',
       cover: 'assets/discography/live-esquisse-nojiri.jpg',
       links: [
         { label: 'Kakubarhythm', url: 'https://kakubarhythm.com/discography/post/10119' }
@@ -196,7 +196,7 @@ TEMPO Slider という DJ向けのブラウザ拡張機能（Chrome / Firefox）
       ]
     },
     {
-      title: 'Guitar Esquisse Volume One', year: 2021, note: 'Masatomo Yoshizawa',
+      title: 'Guitar Esquisse Volume One', year: 2021, note: 'Masatomo Yoshizawa, XTAL',
       cover: 'assets/discography/guitar-esquisse.jpg',
       links: [
         { label: 'Kakubarhythm', url: 'https://kakubarhythm.com/discography/post/9398' }
