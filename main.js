@@ -79,13 +79,36 @@
     }).join('');
   }
 
-  /* ---- 注目リンク（リリース等） ---- */
-  if (D.releases && D.releases.length) {
-    el('releases').innerHTML = D.releases.map(function (r) {
-      return link(r.url, r.label, 'release');
+  /* ---- Featured（今プッシュしたいもの） ---- */
+  if (D.featured && D.featured.length) {
+    el('featured').innerHTML = D.featured.map(function (f) {
+      if (f.type === 'link') {
+        return link(f.url, f.label || f.url, 'release');
+      }
+      // 既定：お知らせカード（post）
+      var out = '<article class="post">';
+      if (f.image) {
+        out += '<img class="post__img" src="' + esc(f.image) + '" alt="' + esc(f.title || '') +
+          '" loading="lazy" />';
+      }
+      out += '<div class="post__body">';
+      if (f.date) out += '<div class="post__date">' + fmtDate(f.date) + '</div>';
+      if (f.title) out += '<h3 class="post__title">' + esc(f.title) + '</h3>';
+      if (f.body) {
+        out += '<div class="post__text">' + f.body.split(/\n\s*\n/).map(function (p) {
+          return '<p>' + esc(p.trim()).replace(/\n/g, '<br>') + '</p>';
+        }).join('') + '</div>';
+      }
+      if (f.links && f.links.length) {
+        out += '<div class="post__links">' + f.links.map(function (l) {
+          return link(l.url, l.label, 'post__link');
+        }).join('') + '</div>';
+      }
+      out += '</div></article>';
+      return out;
     }).join('');
   } else {
-    el('releases').style.display = 'none';
+    el('featured').style.display = 'none';
   }
 
   /* ---- スケジュール ---- */
@@ -132,22 +155,6 @@
     el('schedule-section').style.display = 'none';
   }
 
-  /* ---- News ---- */
-  if (D.news && D.news.length) {
-    var news = D.news.slice().sort(function (a, b) { return a.date > b.date ? -1 : 1; });
-    el('news').innerHTML = '<ul class="news-list">' + news.map(function (n) {
-      var title = n.url
-        ? link(n.url, n.title || '', 'news__title')
-        : '<span class="news__title">' + esc(n.title || '') + '</span>';
-      return '<li class="news__item">' +
-        '<div class="news__date">' + fmtDate(n.date) + '</div>' +
-        '<div class="news__body">' + title +
-        (n.body ? '<p>' + esc(n.body) + '</p>' : '') + '</div></li>';
-    }).join('') + '</ul>';
-  } else {
-    el('news-section').style.display = 'none';
-  }
-
   /* ---- Discography ---- */
   if (D.discography && D.discography.length) {
     el('discography').innerHTML = '<ul class="disco-grid">' + D.discography.map(function (r) {
@@ -176,7 +183,7 @@
   var year = new Date().getFullYear();
   var footHtml = '';
   if (D.contact && D.contact.url) {
-    footHtml += '<a class="link" href="' + esc(D.contact.url) + '">' + esc(D.contact.label || 'Contact') + '</a>';
+    footHtml += '<a class="contact-cta" href="' + esc(D.contact.url) + '">' + esc(D.contact.label || 'Contact') + '</a>';
   }
   footHtml += '<div class="foot__copy">© ' + year + ' XTAL</div>';
   el('foot').innerHTML = footHtml;

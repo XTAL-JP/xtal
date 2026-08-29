@@ -33,13 +33,33 @@ var DATA = {
     { label: 'YouTube',     url: 'https://www.youtube.com/@XTAL_JP' }
   ],
 
-  // 注目リンク（リリース・拡張機能など。LinkTree のメインボタン相当）
-  releases: [
-    { label: 'XTAL / Inner Science "Voices"',  url: 'https://album.link/i/1810029937' },
-    { label: 'XTAL "EKO"',                     url: 'https://kakubarhythm.lnk.to/EKO' },
-    { label: 'XTAL & KEITA SANO "The Sun" EP', url: 'https://tr.ee/1FvbNieVmW' },
-    { label: 'Contact: XTAL (DJ Mix)',         url: 'https://music.apple.com/jp/album/contact-xtal-dj-mix/1781317663' },
-    { label: 'TEMPO Slider (Chrome extension)', url: 'https://chromewebstore.google.com/detail/tempo-slider/khfoddahloneinahhnejjpjengdaglcl' }
+  /*
+   * Featured（今プッシュしたいもの）。socials の下・Schedule の上に表示。
+   *   - お知らせカード：{ type:'post', date, title, body(空行で段落), links:[{label,url}], image(任意) }
+   *   - 単純リンクボタン：{ type:'link', label:'表示名', url:'URL' }
+   *   複数並べられます。差し替えたいときはこの配列を編集して push。
+   */
+  featured: [
+    {
+      type: 'post',
+      date: '2026-06-27',
+      title: 'TEMPO Slider — Browser Extension for DJs',
+      body:
+`TEMPO Slider という DJ向けのブラウザ拡張機能（Chrome / Firefox）を公開しました。ネットで試聴する時に、実際にDJでプレイする時のように、テンポを変更した状態で検討したいと思い、制作しました。
+
+対応サイト：Bandcamp / Beatport / Traxsource / Discogs（YouTube 試聴）ほか、任意のサイトを追加可能。Chrome / Firefox 対応・無料・オープンソース。DJ の方、ぜひ使ってみてください。フィードバックもお待ちしてます。
+
+————
+
+Just released a browser extension for DJs called TEMPO Slider (Chrome / Firefox). I built this because I wanted to audition tracks online at the same tempo I'd actually play them at in a set.
+
+Supported sites: Bandcamp / Beatport / Traxsource / Discogs (YouTube previews), plus any other site you add. Chrome / Firefox · free · open source. DJs, give it a try — feedback welcome!`,
+      links: [
+        { label: 'Chrome',    url: 'https://chromewebstore.google.com/detail/tempo-slider/khfoddahloneinahhnejjpjengdaglcl' },
+        { label: 'Firefox',   url: 'https://addons.mozilla.org/ja/firefox/addon/tempo-slider/' },
+        { label: 'Instagram', url: 'https://www.instagram.com/p/DaHHpa1ElQ6/' }
+      ]
+    }
   ],
 
   /*
@@ -66,19 +86,6 @@ var DATA = {
     //   date: '2026-09-20', title: 'Night Session', venue: 'Club XXX', city: 'Tokyo',
     //   type: 'dj', links: [{ label: 'Tickets', url: 'https://...' }]
     // },
-  ],
-
-  /*
-   * News（雑多なトピック）。新しい順に表示されます。
-   *   新しい記事は配列の「先頭」に足してください。url は任意（あればタイトルがリンクに）。
-   */
-  news: [
-    {
-      date: '2026-08-29',
-      title: 'Website launched',
-      body: 'The official XTAL website is now live.',
-      url: ''
-    }
   ],
 
   /*
@@ -156,6 +163,6 @@ var DATA = {
     }
   ],
 
-  // フッターに出す連絡先（任意）。※要確認：正しい連絡先に
-  contact: { label: 'Contact', url: 'mailto:contact@xtal-jp.com' }
+  // フッターに出す連絡先（任意）。label を変えれば文言も変わります。
+  contact: { label: 'Get in Touch', url: 'mailto:contact@xtal-jp.com' }
 };
