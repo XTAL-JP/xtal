@@ -125,7 +125,7 @@
   /* 生成結果を一度オフスクリーンに焼き、以降はゆっくり動かす（軽量） */
   var scene = null, sceneW = 0, sceneH = 0, dpr = 1;
   var grainPattern = null;
-  var OVER = 1.28; // ビューポートより大きく焼き、ドリフト/ズームで端が出ないように
+  var OVER = 1.34; // ビューポートより大きく焼き、ドリフト/ズームで端が出ないように
 
   function buildScene() {
     var vw = window.innerWidth, vh = window.innerHeight;
@@ -142,7 +142,7 @@
     var sc = scene.getContext('2d');
 
     // 低解像度バッファに構成を描く
-    var scale = 0.30;
+    var scale = 0.34;
     var bw = Math.max(120, Math.floor(sceneW * scale));
     var bh = Math.max(120, Math.floor(sceneH * scale));
     var buf = document.createElement('canvas');
@@ -166,7 +166,7 @@
     // シーンへ拡大転写（弱めのブラーで輪郭を残しつつ滑らかに）
     sc.imageSmoothingEnabled = true;
     sc.imageSmoothingQuality = 'high';
-    sc.filter = 'blur(' + (3.5 * dpr) + 'px)';
+    sc.filter = 'blur(' + (2.5 * dpr) + 'px)';
     sc.drawImage(buf, -12, -12, sceneW + 24, sceneH + 24);
     sc.filter = 'none';
 
@@ -179,11 +179,11 @@
     ctx.globalCompositeOperation = 'source-over';
     ctx.clearRect(0, 0, w, h);
 
-    // すごくゆっくりした揺らぎ（ズーム/ドリフト/微回転・数十秒周期）
-    var s   = 1.03 + 0.03 * Math.sin(t / 22000);
-    var px  = 0.055 * w * Math.sin(t / 31000);
-    var py  = 0.050 * h * Math.sin(t / 27000);
-    var rot = 0.010 * Math.sin(t / 38000);
+    // ゆっくりした揺らぎ（ズーム/ドリフト/微回転）— 視認できる程度に
+    var s   = 1.05 + 0.045 * Math.sin(t / 17000);
+    var px  = 0.075 * w * Math.sin(t / 22000);
+    var py  = 0.065 * h * Math.sin(t / 19000);
+    var rot = 0.016 * Math.sin(t / 27000);
 
     ctx.save();
     ctx.translate(w / 2 + px, h / 2 + py);
