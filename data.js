@@ -157,15 +157,6 @@ TEMPO Slider という DJ向けのブラウザ拡張機能（Chrome / Firefox）
       ]
     },
     {
-      title: 'Lost And Found (Extended Version)', year: 2022, note: '(((さらうんど)))',
-      cover: 'assets/discography/lost-and-found.jpg',
-      links: [
-        { label: 'Bandcamp', url: 'https://xtal-jp.bandcamp.com/album/lost-and-found-extended-version' },
-        { label: 'Apple Music', url: 'https://music.apple.com/jp/album/lost-and-found-extended-version-single/1845051927' },
-        { label: 'Spotify', url: 'https://open.spotify.com/intl-ja/album/76KuMtBuiGt7jL7mtZS5fl' }
-      ]
-    },
-    {
       title: 'Playing Nowhere', year: 2022, note: 'Masatomo Yoshizawa',
       cover: 'assets/discography/playing-nowhere.jpg',
       links: [
