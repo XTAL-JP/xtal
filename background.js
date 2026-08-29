@@ -44,7 +44,7 @@
       blobs.push({
         x: rand(-0.15, 1.15), y: rand(-0.15, 1.15),
         r: rand(0.30, 0.62), rot: rand(0, Math.PI), stretch: rand(1.0, 2.8),
-        h: c.h, s: c.s, l: c.l, a: rand(0.34, 0.58)
+        h: c.h, s: c.s, l: c.l, a: rand(0.30, 0.52)
       });
     }
     // 中くらいのディテール層（数多く）
@@ -54,7 +54,7 @@
       blobs.push({
         x: rand(0, 1), y: rand(0, 1),
         r: rand(0.10, 0.26), rot: rand(0, Math.PI), stretch: rand(1.0, 2.4),
-        h: c.h, s: c.s, l: Math.min(c.l + 2, 68), a: rand(0.24, 0.42)
+        h: c.h, s: c.s, l: Math.min(c.l + 2, 66), a: rand(0.22, 0.38)
       });
     }
     // 極小のフィラメント層（複雑さの粒立ちを追加）
@@ -64,7 +64,7 @@
       blobs.push({
         x: rand(-0.05, 1.05), y: rand(-0.05, 1.05),
         r: rand(0.05, 0.14), rot: rand(0, Math.PI), stretch: rand(1.4, 3.4),
-        h: c.h, s: c.s, l: Math.min(c.l + 3, 70), a: rand(0.20, 0.36)
+        h: c.h, s: c.s, l: Math.min(c.l + 3, 68), a: rand(0.18, 0.32)
       });
     }
     // 細長いストローク層（画面を横切る筋で構造的な複雑さを追加）
@@ -74,7 +74,7 @@
       blobs.push({
         x: rand(0, 1), y: rand(0, 1),
         r: rand(0.06, 0.12), rot: rand(0, Math.PI), stretch: rand(3.5, 7.0),
-        h: c.h, s: c.s, l: c.l, a: rand(0.18, 0.32)
+        h: c.h, s: c.s, l: c.l, a: rand(0.16, 0.28)
       });
     }
     // 暗部（谷）— 深い黒でコントラストと複雑性を出す
@@ -170,7 +170,7 @@
     var vg = ctx.createRadialGradient(w * 0.5, h * 0.42, Math.min(w, h) * 0.22,
                                       w * 0.5, h * 0.52, Math.max(w, h) * 0.78);
     vg.addColorStop(0, 'rgba(0,0,0,0)');
-    vg.addColorStop(1, 'rgba(8,4,2,0.5)');
+    vg.addColorStop(1, 'rgba(8,4,2,0.56)');
     ctx.fillStyle = vg;
     ctx.fillRect(0, 0, w, h);
 
