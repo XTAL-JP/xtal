@@ -203,7 +203,7 @@ TEMPO Slider という DJ向けのブラウザ拡張機能（Chrome / Firefox）
       ]
     },
     {
-      title: 'A Leap (feat. achico)', year: 2020, note: 'Jun Kamoda',
+      title: 'A Leap (feat. achico)', year: 2020,
       cover: 'assets/discography/a-leap.jpg',
       links: [
         { label: 'Bandcamp', url: 'https://junkamoda.bandcamp.com/track/xtal-a-leap-featuring-achico-jun008' },
