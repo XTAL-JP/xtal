@@ -253,7 +253,7 @@ body {
   color: var(--ink-dim);
   margin-bottom: 6px;
 }
-.ev__head { display: flex; align-items: baseline; flex-wrap: wrap; gap: 10px; }
+.ev__head { display: flex; align-items: center; flex-wrap: wrap; gap: 10px; }
 .ev__type {
   font-size: 10px;
   letter-spacing: 0.14em;
