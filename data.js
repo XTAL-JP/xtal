@@ -119,6 +119,14 @@ TEMPO Slider という DJ向けのブラウザ拡張機能（Chrome / Firefox）
       ]
     },
     {
+      title: 'The Sun EP', year: 2024, note: 'XTAL & KEITA SANO',
+      cover: 'assets/discography/the-sun.jpg',
+      links: [
+        { label: 'Apple Music', url: 'https://music.apple.com/jp/album/the-sun-ep-single/1839189943' },
+        { label: 'Spotify', url: 'https://open.spotify.com/album/7v4YnRuEl2Q37yWnUVqHLr' }
+      ]
+    },
+    {
       title: 'QUIET SPACE FOR QUIET LIFE Part.3 & 4', year: 2023,
       cover: 'assets/discography/quiet-space-2.jpg',
       links: [
@@ -160,6 +168,15 @@ TEMPO Slider という DJ向けのブラウザ拡張機能（Chrome / Firefox）
         { label: 'Bandcamp', url: 'https://xtal-jp.bandcamp.com/album/quiet-space-for-quiet-life-part-1-2' },
         { label: 'Apple Music', url: 'https://music.apple.com/jp/album/quiet-space-for-quiet-life-pts-1-2-ep/1594347305' },
         { label: 'Spotify', url: 'https://open.spotify.com/album/1N2e1jlChBhvY7efSF6MzL' }
+      ]
+    },
+    {
+      title: 'A Leap (feat. achico)', year: 2020, note: 'Jun Kamoda',
+      cover: 'assets/discography/a-leap.jpg',
+      links: [
+        { label: 'Bandcamp', url: 'https://junkamoda.bandcamp.com/track/xtal-a-leap-featuring-achico-jun008' },
+        { label: 'Apple Music', url: 'https://music.apple.com/jp/album/a-leap-feat-achico-single/1519044717' },
+        { label: 'Spotify', url: 'https://open.spotify.com/album/5Kujszco5xJHC8lJUsZVzc' }
       ]
     },
     {
