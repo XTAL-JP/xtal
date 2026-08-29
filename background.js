@@ -1,232 +1,219 @@
 /*
- * 暖色系の有機的なグラデーション背景をランダム生成する。
- * - アクセス（リロード）ごとに配色・暗部・流れが変わる。
- * - 生成は静止画（アニメーションなし＝軽量）。resize 時のみ同じ配色で再描画。
- * - 2スケール構成（大きな発光＋小さなディテール）＋伸長・回転させた楕円グラデ（流れる筋）で
- *   色数と複雑性を確保。低解像度バッファに描いて拡大＋ブラーで滑らかにする。
- * - フィルムグレイン（ノイズ）を薄く重ねて粒状感を付与。
+ * 背景：暖色系の生成的アニメーション（Brian Eno "Bloom" 的に、
+ * 要素が咲いては消え、位置・大きさ・色がゆっくり移り変わり、パターンが常に変化する）。
+ * - 毎フレーム、低解像度バッファに色面を再生成して拡大（軽量）。
+ * - 暖色主体＋寒色アクセント。暗すぎ防止の暖色アンビエントを常時敷く。
+ * - prefers-reduced-motion では1枚だけ描いて静止。
  */
 (function () {
   var canvas = document.getElementById('bg');
-  if (!canvas || !canvas.getContext) return; // 非対応時は CSS の暖色フォールバックが見える
+  if (!canvas || !canvas.getContext) return;
   var ctx = canvas.getContext('2d');
 
   function rand(min, max) { return min + Math.random() * (max - min); }
 
-  /* 暖色を中心に、色数を増やしたパレットからピック（アクセントに寒色も少量） */
+  /* 暖色を中心に色数を増やしたパレット（アクセントに寒色も少量） */
   function pickColor() {
     var r = Math.random();
-    // 暖色（約70%）— 明度の上限を抑えて白飛びを防ぐ
     if (r < 0.13)  return { h: rand(0, 10),    s: rand(85, 98),  l: rand(46, 55) };   // 赤
     if (r < 0.28)  return { h: rand(10, 22),   s: rand(88, 100), l: rand(48, 57) };   // コーラル
     if (r < 0.43)  return { h: rand(22, 34),   s: rand(90, 100), l: rand(46, 55) };   // オレンジ
     if (r < 0.54)  return { h: rand(34, 44),   s: rand(85, 98),  l: rand(48, 56) };   // アンバー
     if (r < 0.62)  return { h: rand(40, 50),   s: rand(80, 92),  l: rand(50, 58) };   // ゴールド
-    if (r < 0.68)  return { h: rand(28, 44),   s: rand(65, 88),  l: rand(54, 62) };   // ピーチ/クリーム
+    if (r < 0.68)  return { h: rand(28, 44),   s: rand(65, 88),  l: rand(54, 62) };   // ピーチ
     if (r < 0.72)  return { h: rand(335, 352), s: rand(70, 88),  l: rand(52, 60) };   // ローズ
-    // アクセント（約30%）— 色数を増やす
     if (r < 0.79)  return { h: rand(305, 330), s: rand(60, 82),  l: rand(52, 60) };   // マゼンタ
     if (r < 0.84)  return { h: rand(275, 300), s: rand(55, 78),  l: rand(52, 60) };   // パープル
-    if (r < 0.885) return { h: rand(250, 275), s: rand(52, 74),  l: rand(52, 60) };   // インディゴ/バイオレット
+    if (r < 0.885) return { h: rand(250, 275), s: rand(52, 74),  l: rand(52, 60) };   // インディゴ
     if (r < 0.925) return { h: rand(215, 245), s: rand(55, 78),  l: rand(50, 60) };   // ブルー
-    if (r < 0.96)  return { h: rand(185, 210), s: rand(58, 80),  l: rand(48, 58) };   // シアン/アズール
+    if (r < 0.96)  return { h: rand(185, 210), s: rand(58, 80),  l: rand(48, 58) };   // シアン
     if (r < 0.985) return { h: rand(165, 185), s: rand(55, 76),  l: rand(46, 56) };   // ティール
     return         { h: rand(140, 165), s: rand(52, 74),  l: rand(46, 56) };          // グリーン
   }
 
-  /* このロードで1回だけランダムな配色構成を決める（resize では変えない） */
-  function buildComposition() {
-    var blobs = [], i, c;
-    // 大きめの発光ブロブ（多め・伸長した筋）
-    var n = Math.floor(rand(6, 9));
-    for (i = 0; i < n; i++) {
-      c = pickColor();
-      blobs.push({
-        x: rand(-0.15, 1.15), y: rand(-0.15, 1.15),
-        r: rand(0.30, 0.62), rot: rand(0, Math.PI), stretch: rand(1.0, 2.8),
-        h: c.h, s: c.s, l: c.l, a: rand(0.26, 0.46)
-      });
-    }
-    // 中くらいのディテール層（数多く）
-    var m = Math.floor(rand(7, 11));
-    for (i = 0; i < m; i++) {
-      c = pickColor();
-      blobs.push({
-        x: rand(0, 1), y: rand(0, 1),
-        r: rand(0.10, 0.26), rot: rand(0, Math.PI), stretch: rand(1.0, 2.4),
-        h: c.h, s: c.s, l: Math.min(c.l + 2, 64), a: rand(0.20, 0.34)
-      });
-    }
-    // 極小のフィラメント層（複雑さの粒立ちを追加）
-    var k = Math.floor(rand(8, 14));
-    for (i = 0; i < k; i++) {
-      c = pickColor();
-      blobs.push({
-        x: rand(-0.05, 1.05), y: rand(-0.05, 1.05),
-        r: rand(0.05, 0.14), rot: rand(0, Math.PI), stretch: rand(1.4, 3.4),
-        h: c.h, s: c.s, l: Math.min(c.l + 3, 66), a: rand(0.16, 0.28)
-      });
-    }
-    // 細長いストローク層（画面を横切る筋で構造的な複雑さを追加）
-    var st = Math.floor(rand(3, 6));
-    for (i = 0; i < st; i++) {
-      c = pickColor();
-      blobs.push({
-        x: rand(0, 1), y: rand(0, 1),
-        r: rand(0.06, 0.12), rot: rand(0, Math.PI), stretch: rand(3.5, 7.0),
-        h: c.h, s: c.s, l: c.l, a: rand(0.14, 0.24)
-      });
-    }
-    // 暗部（谷）— 深い黒でコントラストと複雑性を出す
-    var darks = [];
-    var dn = Math.floor(rand(3, 6));
-    for (i = 0; i < dn; i++) {
-      darks.push({
-        x: rand(-0.05, 1.05), y: rand(-0.05, 1.15),
-        r: rand(0.30, 0.78), rot: rand(0, Math.PI), stretch: rand(1.0, 2.2),
-        h: rand(10, 30), l: rand(3, 8), a: rand(0.7, 0.95)
-      });
-    }
-    // 最低限の暖色アンビエント（暗すぎを防ぐフロア）
-    var amb = {
-      x: rand(0.30, 0.70), y: rand(0.32, 0.62),
-      r: rand(0.62, 0.95), hue: rand(15, 42),
-      l: rand(30, 38), a: rand(0.5, 0.66)
+  /* レイヤー定義（bloom=true は咲いて消える／false は常在してゆっくり脈動） */
+  var LAYERS = {
+    large:  { rMin: 0.30, rMax: 0.60, stMin: 1.0, stMax: 2.6, aMin: 0.30, aMax: 0.46, lBoost: 0, lfMin: 0.05, lfMax: 0.12, bloom: false },
+    detail: { rMin: 0.10, rMax: 0.26, stMin: 1.0, stMax: 2.4, aMin: 0.22, aMax: 0.38, lBoost: 2, lfMin: 0.12, lfMax: 0.30, bloom: true },
+    fil:    { rMin: 0.05, rMax: 0.14, stMin: 1.4, stMax: 3.4, aMin: 0.16, aMax: 0.28, lBoost: 3, lfMin: 0.14, lfMax: 0.34, bloom: true },
+    streak: { rMin: 0.06, rMax: 0.12, stMin: 3.5, stMax: 7.0, aMin: 0.14, aMax: 0.24, lBoost: 0, lfMin: 0.10, lfMax: 0.24, bloom: true }
+  };
+
+  function makeCell(layer) {
+    var c = pickColor();
+    return {
+      layer: layer, bloom: layer.bloom, active: true,
+      bx: rand(-0.1, 1.1), by: rand(-0.12, 1.12),
+      ax: rand(0.05, 0.16), ay: rand(0.05, 0.14),
+      fx: rand(0.08, 0.20), fy: rand(0.08, 0.20), px: rand(0, 6.28), py: rand(0, 6.28),
+      r: rand(layer.rMin, layer.rMax),
+      pulse: rand(0.12, 0.34), pf: rand(0.10, 0.24), pp: rand(0, 6.28),
+      rot: rand(0, Math.PI), rs: rand(-0.015, 0.015), st: rand(layer.stMin, layer.stMax),
+      h: c.h, s: c.s, l: Math.min(c.l + layer.lBoost, 66),
+      aPeak: rand(layer.aMin, layer.aMax),
+      lf: rand(layer.lfMin, layer.lfMax),
+      // bloom は必ず alpha=0 付近から立ち上がるよう、初期位相を負側にずらして時間差で咲かせる
+      lp: layer.bloom ? -rand(0.1, 3.0) : rand(0, 6.28)
     };
-    return { blobs: blobs, darks: darks, amb: amb, baseHue: rand(12, 28) };
+  }
+  function respawn(o, t) {
+    var c = pickColor(), L = o.layer;
+    o.bx = rand(-0.1, 1.1); o.by = rand(-0.12, 1.12);
+    o.fx = rand(0.08, 0.20); o.fy = rand(0.08, 0.20);
+    o.px = rand(0, 6.28); o.py = rand(0, 6.28); o.pp = rand(0, 6.28);
+    o.rot = rand(0, Math.PI); o.rs = rand(-0.015, 0.015); o.st = rand(L.stMin, L.stMax);
+    o.h = c.h; o.s = c.s; o.l = Math.min(c.l + L.lBoost, 66);
+    o.aPeak = rand(L.aMin, L.aMax); o.r = rand(L.rMin, L.rMax); o.lf = rand(L.lfMin, L.lfMax);
+    // ライフ位相を今の時刻に同期し、必ず alpha=0 からフェードインで咲く
+    o.lp = -(t * o.lf);
   }
 
-  var comp = buildComposition();
+  var cells = [], darks = [], amb, baseHue;
+  function build() {
+    cells = [];
+    var i, n;
+    n = Math.floor(rand(5, 7));  for (i = 0; i < n; i++) cells.push(makeCell(LAYERS.large));
+    n = Math.floor(rand(8, 11)); for (i = 0; i < n; i++) cells.push(makeCell(LAYERS.detail));
+    n = Math.floor(rand(9, 13)); for (i = 0; i < n; i++) cells.push(makeCell(LAYERS.fil));
+    n = Math.floor(rand(3, 5));  for (i = 0; i < n; i++) cells.push(makeCell(LAYERS.streak));
+    darks = [];
+    n = Math.floor(rand(3, 5));
+    for (i = 0; i < n; i++) darks.push({
+      bx: rand(-0.05, 1.05), by: rand(-0.05, 1.15),
+      ax: rand(0.03, 0.10), ay: rand(0.03, 0.10), fx: rand(0.04, 0.10), fy: rand(0.04, 0.10),
+      px: rand(0, 6.28), py: rand(0, 6.28),
+      r: rand(0.30, 0.78), st: rand(1.0, 2.2), rot: rand(0, Math.PI),
+      h: rand(10, 30), l: rand(3, 8), a: rand(0.65, 0.9)
+    });
+    amb = {
+      bx: rand(0.3, 0.7), by: rand(0.3, 0.6), ax: rand(0.05, 0.14), ay: rand(0.04, 0.12),
+      fx: rand(0.05, 0.12), fy: rand(0.05, 0.12), px: rand(0, 6.28), py: rand(0, 6.28),
+      r: rand(0.68, 0.98), hue: rand(15, 42), l: rand(34, 42), a: rand(0.6, 0.78),
+      pulse: rand(0.1, 0.25), pf: rand(0.06, 0.14), pp: rand(0, 6.28)
+    };
+    baseHue = rand(15, 30);
+  }
+  build();
 
-  /* グレイン用のノイズタイルを一度だけ作る */
+  /* グレイン */
   var grain = document.createElement('canvas');
   grain.width = grain.height = 160;
   (function () {
     var g = grain.getContext('2d');
-    var img = g.createImageData(grain.width, grain.height);
-    var d = img.data;
+    var img = g.createImageData(grain.width, grain.height), d = img.data;
     for (var i = 0; i < d.length; i += 4) {
       var v = 128 + (Math.random() * 255 - 128);
       d[i] = d[i + 1] = d[i + 2] = v; d[i + 3] = 255;
     }
     g.putImageData(img, 0, 0);
   })();
+  var grainPattern = null;
 
-  /* 伸長・回転させた楕円グラデを描く（流れる筋の表現） */
-  function paintBlob(b, o, bw, bh, minSide, inner, mid) {
-    var cx = o.x * bw, cy = o.y * bh, rr = o.r * minSide;
-    b.save();
-    b.translate(cx, cy);
-    b.rotate(o.rot || 0);
-    b.scale(o.stretch || 1, 1);            // x方向に伸ばして筋状に
-    var grd = b.createRadialGradient(0, 0, 0, 0, 0, rr);
-    grd.addColorStop(0, inner);
-    grd.addColorStop(0.55, mid);
-    grd.addColorStop(1, mid.replace(/[\d.]+\)$/, '0)'));
-    b.fillStyle = grd;
-    b.fillRect(-bw * 2, -bh * 2, bw * 4, bh * 4);
-    b.restore();
+  /* 伸長・回転させた楕円グラデを描く */
+  function paintBlob(b, cx, cy, rr, rot, st, inner, mid, bw, bh) {
+    b.save(); b.translate(cx, cy); b.rotate(rot); b.scale(st, 1);
+    var g = b.createRadialGradient(0, 0, 0, 0, 0, rr);
+    g.addColorStop(0, inner);
+    g.addColorStop(0.55, mid);
+    g.addColorStop(1, mid.replace(/[\d.]+\)$/, '0)'));
+    b.fillStyle = g; b.fillRect(-bw * 2, -bh * 2, bw * 4, bh * 4); b.restore();
   }
 
-  /* 生成結果を一度オフスクリーンに焼き、以降はゆっくり動かす（軽量） */
-  var scene = null, sceneW = 0, sceneH = 0, dpr = 1;
-  var grainPattern = null;
-  var OVER = 1.34; // ビューポートより大きく焼き、ドリフト/ズームで端が出ないように
-
-  function buildScene() {
+  var dpr = 1, bufC = null, bufX = null, bw = 0, bh = 0;
+  function resize() {
     var vw = window.innerWidth, vh = window.innerHeight;
     dpr = Math.min(window.devicePixelRatio || 1, 2);
     canvas.width = Math.floor(vw * dpr);
     canvas.height = Math.floor(vh * dpr);
     canvas.style.width = vw + 'px';
     canvas.style.height = vh + 'px';
-
-    sceneW = Math.round(canvas.width * OVER);
-    sceneH = Math.round(canvas.height * OVER);
-    scene = document.createElement('canvas');
-    scene.width = sceneW; scene.height = sceneH;
-    var sc = scene.getContext('2d');
-
-    // 低解像度バッファに構成を描く
-    var scale = 0.34;
-    var bw = Math.max(120, Math.floor(sceneW * scale));
-    var bh = Math.max(120, Math.floor(sceneH * scale));
-    var buf = document.createElement('canvas');
-    buf.width = bw; buf.height = bh;
-    var b = buf.getContext('2d');
-    var minSide = Math.min(bw, bh);
-
-    b.fillStyle = 'hsl(' + comp.baseHue + ',58%,8%)';
-    b.fillRect(0, 0, bw, bh);
-
-    // 暗すぎ防止：中央付近の柔らかい暖色アンビエント（フロア）
-    b.globalCompositeOperation = 'lighter';
-    (function () {
-      var a = comp.amb;
-      var cx = a.x * bw, cy = a.y * bh, rr = a.r * Math.max(bw, bh);
-      var g = b.createRadialGradient(cx, cy, 0, cx, cy, rr);
-      var base = 'hsla(' + a.hue + ',80%,' + a.l + '%,';
-      g.addColorStop(0, base + a.a + ')');
-      g.addColorStop(0.6, base + (a.a * 0.4) + ')');
-      g.addColorStop(1, base + '0)');
-      b.fillStyle = g;
-      b.fillRect(0, 0, bw, bh);
-    })();
-
-    comp.blobs.forEach(function (o) {
-      var base = 'hsla(' + o.h + ',' + o.s + '%,' + o.l + '%,';
-      paintBlob(b, o, bw, bh, minSide, base + o.a + ')', base + (o.a * 0.4) + ')');
-    });
-    b.globalCompositeOperation = 'source-over';
-    comp.darks.forEach(function (o) {
-      var base = 'hsla(' + o.h + ',50%,' + o.l + '%,';
-      paintBlob(b, o, bw, bh, minSide, base + o.a + ')', base + (o.a * 0.5) + ')');
-    });
-
-    // シーンへ拡大転写（弱めのブラーで輪郭を残しつつ滑らかに）
-    sc.imageSmoothingEnabled = true;
-    sc.imageSmoothingQuality = 'high';
-    sc.filter = 'blur(' + (2.5 * dpr) + 'px)';
-    sc.drawImage(buf, -12, -12, sceneW + 24, sceneH + 24);
-    sc.filter = 'none';
-
+    var scale = 0.38;
+    bw = Math.max(160, Math.floor(canvas.width * scale));
+    bh = Math.max(160, Math.floor(canvas.height * scale));
+    bufC = document.createElement('canvas'); bufC.width = bw; bufC.height = bh;
+    bufX = bufC.getContext('2d');
     if (!grainPattern) grainPattern = ctx.createPattern(grain, 'repeat');
   }
 
-  function drawFrame(t) {
+  function render(t) {
+    var b = bufX, minSide = Math.min(bw, bh), maxSide = Math.max(bw, bh), i;
+
+    // ベース暗色
+    b.globalCompositeOperation = 'source-over';
+    b.fillStyle = 'hsl(' + baseHue + ',55%,11%)';
+    b.fillRect(0, 0, bw, bh);
+
+    // 発光は加算合成
+    b.globalCompositeOperation = 'lighter';
+
+    // 暗すぎ防止の暖色アンビエント（ゆっくり移動・脈動）
+    var ax = (amb.bx + amb.ax * Math.sin(t * amb.fx + amb.px)) * bw;
+    var ay = (amb.by + amb.ay * Math.sin(t * amb.fy + amb.py)) * bh;
+    var ar = amb.r * maxSide * (1 + amb.pulse * 0.3 * Math.sin(t * amb.pf + amb.pp));
+    var aa = amb.a * (0.85 + 0.15 * Math.sin(t * amb.pf + amb.pp));
+    (function () {
+      var base = 'hsla(' + amb.hue + ',80%,' + amb.l + '%,';
+      var g = b.createRadialGradient(ax, ay, 0, ax, ay, ar);
+      g.addColorStop(0, base + aa + ')');
+      g.addColorStop(0.6, base + (aa * 0.4) + ')');
+      g.addColorStop(1, base + '0)');
+      b.fillStyle = g; b.fillRect(0, 0, bw, bh);
+    })();
+
+    // セル（咲いては消え、位置・大きさ・色が移り変わる）
+    for (i = 0; i < cells.length; i++) {
+      var o = cells[i], env;
+      if (o.bloom) {
+        var sv = Math.sin(t * o.lf + o.lp);
+        if (sv <= 0) { if (o.active) { o.active = false; respawn(o, t); } continue; }
+        o.active = true; env = sv;                 // 0..1 で咲く（sin の立ち上がりで徐々に）
+      } else {
+        env = 0.55 + 0.45 * Math.sin(t * o.lf + o.lp); // 常在＋脈動
+      }
+      var alpha = o.aPeak * env;
+      if (alpha < 0.012) continue;
+      var x = (o.bx + o.ax * Math.sin(t * o.fx + o.px)) * bw;
+      var y = (o.by + o.ay * Math.sin(t * o.fy + o.py)) * bh;
+      var rr = o.r * minSide * (1 + o.pulse * Math.sin(t * o.pf + o.pp));
+      if (rr < 1) continue;
+      var rot = o.rot + o.rs * t;
+      var base = 'hsla(' + o.h + ',' + o.s + '%,' + o.l + '%,';
+      paintBlob(b, x, y, rr, rot, o.st, base + alpha + ')', base + (alpha * 0.4) + ')', bw, bh);
+    }
+
+    // 暗部（谷）
+    b.globalCompositeOperation = 'source-over';
+    for (i = 0; i < darks.length; i++) {
+      var d = darks[i];
+      var dx = (d.bx + d.ax * Math.sin(t * d.fx + d.px)) * bw;
+      var dy = (d.by + d.ay * Math.sin(t * d.fy + d.py)) * bh;
+      var dr = d.r * minSide;
+      var dbase = 'hsla(' + d.h + ',50%,' + d.l + '%,';
+      paintBlob(b, dx, dy, dr, d.rot, d.st, dbase + d.a + ')', dbase + (d.a * 0.5) + ')', bw, bh);
+    }
+
+    // メインへ拡大（スムージングのみ＝ぼやけ控えめ）
     var w = canvas.width, h = canvas.height;
     ctx.setTransform(1, 0, 0, 1, 0, 0);
     ctx.globalCompositeOperation = 'source-over';
     ctx.clearRect(0, 0, w, h);
-
-    // 揺らぎ（ズーム/ドリフト/微回転）— 速めに
-    var s   = 1.05 + 0.045 * Math.sin(t / 10000);
-    var px  = 0.075 * w * Math.sin(t / 13000);
-    var py  = 0.065 * h * Math.sin(t / 11000);
-    var rot = 0.016 * Math.sin(t / 16000);
-
-    ctx.save();
-    ctx.translate(w / 2 + px, h / 2 + py);
-    ctx.rotate(rot);
-    ctx.scale(s, s);
     ctx.imageSmoothingEnabled = true;
     ctx.imageSmoothingQuality = 'high';
-    ctx.drawImage(scene, -sceneW / 2, -sceneH / 2, sceneW, sceneH);
-    ctx.restore();
+    ctx.drawImage(bufC, 0, 0, w, h);
 
-    // 周辺減光（画面固定）
-    var vg = ctx.createRadialGradient(w * 0.5, h * 0.42, Math.min(w, h) * 0.22,
-                                      w * 0.5, h * 0.52, Math.max(w, h) * 0.78);
+    // 周辺減光
+    var vg = ctx.createRadialGradient(w * 0.5, h * 0.44, Math.min(w, h) * 0.26,
+                                      w * 0.5, h * 0.5, Math.max(w, h) * 0.82);
     vg.addColorStop(0, 'rgba(0,0,0,0)');
-    vg.addColorStop(1, 'rgba(8,4,2,0.62)');
+    vg.addColorStop(1, 'rgba(8,4,2,0.48)');
     ctx.fillStyle = vg;
     ctx.fillRect(0, 0, w, h);
 
-    // 全体を少し落とす薄い暗幕
-    ctx.fillStyle = 'rgba(0,0,0,0.12)';
+    // ごく薄い暗幕
+    ctx.fillStyle = 'rgba(0,0,0,0.05)';
     ctx.fillRect(0, 0, w, h);
 
-    // フィルムグレイン（画面固定）
+    // フィルムグレイン
     ctx.globalAlpha = 0.05;
     ctx.globalCompositeOperation = 'soft-light';
     ctx.fillStyle = grainPattern;
@@ -235,31 +222,20 @@
     ctx.globalCompositeOperation = 'source-over';
   }
 
-  var raf = null, startTs = null;
+  resize();
+  var raf = null, t0 = null;
   var reduce = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-
   function loop(ts) {
-    if (startTs == null) startTs = ts;
-    drawFrame(ts - startTs);
+    if (t0 == null) t0 = ts;
+    render((ts - t0) / 1000);   // 初回フレームを 0 とする相対時間
     raf = window.requestAnimationFrame(loop);
   }
-
-  function start() {
-    buildScene();
-    if (raf) { window.cancelAnimationFrame(raf); raf = null; }
-    if (reduce || !window.requestAnimationFrame) {
-      drawFrame(0); // 動きを控える設定では静止
-    } else {
-      startTs = null;
-      raf = window.requestAnimationFrame(loop);
-    }
-  }
-
-  start();
+  if (reduce || !window.requestAnimationFrame) { render(0.5); } // 静止時は少し咲かせた状態で
+  else { raf = window.requestAnimationFrame(loop); }
 
   var rt;
   window.addEventListener('resize', function () {
     clearTimeout(rt);
-    rt = setTimeout(start, 200); // サイズ変更時はシーンを焼き直し（配色は保持）
+    rt = setTimeout(function () { resize(); if (reduce) render(0); }, 200);
   });
 })();
