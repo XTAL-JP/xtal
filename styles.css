@@ -144,7 +144,7 @@ body {
 .release:hover { background: rgba(0, 0, 0, 0.28); border-color: var(--ink); }
 
 /* ---- Featured（今プッシュしたいもの） ---- */
-.featured { margin: 52px auto 8px; max-width: 560px; }
+.featured { margin: clamp(76px, 11vw, 120px) auto 8px; max-width: 560px; }
 .post {
   text-align: left;
   border: 1px solid var(--line);
@@ -172,7 +172,7 @@ body {
 
 /* ---- セクション共通 ---- */
 .section {
-  margin-top: 64px;
+  margin-top: clamp(76px, 11vw, 120px);
   text-align: left;
 }
 .section__title {
@@ -380,7 +380,6 @@ a.news__title:hover { border-bottom-color: var(--ink); }
   .hero__tagline { letter-spacing: 0.16em; }
   .links { gap: 6px 16px; }
   .link { font-size: 13px; }
-  .section { margin-top: 52px; }
 }
 
 /* アニメーションを控える設定でも背景は静止画なので影響なし */
