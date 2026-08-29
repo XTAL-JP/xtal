@@ -122,51 +122,79 @@
     b.restore();
   }
 
-  function render() {
-    var w = window.innerWidth, h = window.innerHeight;
-    var dpr = Math.min(window.devicePixelRatio || 1, 2);
-    canvas.width = Math.floor(w * dpr);
-    canvas.height = Math.floor(h * dpr);
-    canvas.style.width = w + 'px';
-    canvas.style.height = h + 'px';
+  /* 生成結果を一度オフスクリーンに焼き、以降はゆっくり動かす（軽量） */
+  var scene = null, sceneW = 0, sceneH = 0, dpr = 1;
+  var grainPattern = null;
+  var OVER = 1.28; // ビューポートより大きく焼き、ドリフト/ズームで端が出ないように
 
-    /* 低解像度バッファに構成を描く（ディテールを残すため少し高め） */
+  function buildScene() {
+    var vw = window.innerWidth, vh = window.innerHeight;
+    dpr = Math.min(window.devicePixelRatio || 1, 2);
+    canvas.width = Math.floor(vw * dpr);
+    canvas.height = Math.floor(vh * dpr);
+    canvas.style.width = vw + 'px';
+    canvas.style.height = vh + 'px';
+
+    sceneW = Math.round(canvas.width * OVER);
+    sceneH = Math.round(canvas.height * OVER);
+    scene = document.createElement('canvas');
+    scene.width = sceneW; scene.height = sceneH;
+    var sc = scene.getContext('2d');
+
+    // 低解像度バッファに構成を描く
     var scale = 0.30;
-    var bw = Math.max(90, Math.floor(w * scale));
-    var bh = Math.max(90, Math.floor(h * scale));
+    var bw = Math.max(120, Math.floor(sceneW * scale));
+    var bh = Math.max(120, Math.floor(sceneH * scale));
     var buf = document.createElement('canvas');
     buf.width = bw; buf.height = bh;
     var b = buf.getContext('2d');
     var minSide = Math.min(bw, bh);
 
-    // ベースの暗色
     b.fillStyle = 'hsl(' + comp.baseHue + ',60%,5%)';
     b.fillRect(0, 0, bw, bh);
-
-    // 発光（加算合成で暖色を積む）
     b.globalCompositeOperation = 'lighter';
     comp.blobs.forEach(function (o) {
       var base = 'hsla(' + o.h + ',' + o.s + '%,' + o.l + '%,';
       paintBlob(b, o, bw, bh, minSide, base + o.a + ')', base + (o.a * 0.4) + ')');
     });
-
-    // 暗部（谷）を彫る
     b.globalCompositeOperation = 'source-over';
     comp.darks.forEach(function (o) {
       var base = 'hsla(' + o.h + ',50%,' + o.l + '%,';
       paintBlob(b, o, bw, bh, minSide, base + o.a + ')', base + (o.a * 0.5) + ')');
     });
 
-    /* メインへ拡大転写（スムージング＋わずかなブラーでソフトに） */
-    ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+    // シーンへ拡大転写（弱めのブラーで輪郭を残しつつ滑らかに）
+    sc.imageSmoothingEnabled = true;
+    sc.imageSmoothingQuality = 'high';
+    sc.filter = 'blur(' + (3.5 * dpr) + 'px)';
+    sc.drawImage(buf, -12, -12, sceneW + 24, sceneH + 24);
+    sc.filter = 'none';
+
+    if (!grainPattern) grainPattern = ctx.createPattern(grain, 'repeat');
+  }
+
+  function drawFrame(t) {
+    var w = canvas.width, h = canvas.height;
+    ctx.setTransform(1, 0, 0, 1, 0, 0);
     ctx.globalCompositeOperation = 'source-over';
+    ctx.clearRect(0, 0, w, h);
+
+    // すごくゆっくりした揺らぎ（ズーム/ドリフト/微回転・数十秒周期）
+    var s   = 1.03 + 0.03 * Math.sin(t / 22000);
+    var px  = 0.055 * w * Math.sin(t / 31000);
+    var py  = 0.050 * h * Math.sin(t / 27000);
+    var rot = 0.010 * Math.sin(t / 38000);
+
+    ctx.save();
+    ctx.translate(w / 2 + px, h / 2 + py);
+    ctx.rotate(rot);
+    ctx.scale(s, s);
     ctx.imageSmoothingEnabled = true;
     ctx.imageSmoothingQuality = 'high';
-    ctx.filter = 'blur(3.5px)';             // 弱めのブラーで輪郭を残しつつ滑らかに
-    ctx.drawImage(buf, -12, -12, w + 24, h + 24);
-    ctx.filter = 'none';
+    ctx.drawImage(scene, -sceneW / 2, -sceneH / 2, sceneW, sceneH);
+    ctx.restore();
 
-    /* 周辺減光（ビネット）で奥行きを出す */
+    // 周辺減光（画面固定）
     var vg = ctx.createRadialGradient(w * 0.5, h * 0.42, Math.min(w, h) * 0.22,
                                       w * 0.5, h * 0.52, Math.max(w, h) * 0.78);
     vg.addColorStop(0, 'rgba(0,0,0,0)');
@@ -174,24 +202,44 @@
     ctx.fillStyle = vg;
     ctx.fillRect(0, 0, w, h);
 
-    /* 全体を少し落とす薄い暗幕（明るさの上限をさらに下げる） */
+    // 全体を少し落とす薄い暗幕
     ctx.fillStyle = 'rgba(0,0,0,0.12)';
     ctx.fillRect(0, 0, w, h);
 
-    /* フィルムグレイン（弱め・soft-light でくすませない） */
+    // フィルムグレイン（画面固定）
     ctx.globalAlpha = 0.05;
     ctx.globalCompositeOperation = 'soft-light';
-    ctx.fillStyle = ctx.createPattern(grain, 'repeat');
+    ctx.fillStyle = grainPattern;
     ctx.fillRect(0, 0, w, h);
     ctx.globalAlpha = 1;
     ctx.globalCompositeOperation = 'source-over';
   }
 
-  render();
+  var raf = null, startTs = null;
+  var reduce = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
-  var t;
+  function loop(ts) {
+    if (startTs == null) startTs = ts;
+    drawFrame(ts - startTs);
+    raf = window.requestAnimationFrame(loop);
+  }
+
+  function start() {
+    buildScene();
+    if (raf) { window.cancelAnimationFrame(raf); raf = null; }
+    if (reduce || !window.requestAnimationFrame) {
+      drawFrame(0); // 動きを控える設定では静止
+    } else {
+      startTs = null;
+      raf = window.requestAnimationFrame(loop);
+    }
+  }
+
+  start();
+
+  var rt;
   window.addEventListener('resize', function () {
-    clearTimeout(t);
-    t = setTimeout(render, 150); // 同じ配色で再描画（リロードでのみ配色が変わる）
+    clearTimeout(rt);
+    rt = setTimeout(start, 200); // サイズ変更時はシーンを焼き直し（配色は保持）
   });
 })();
