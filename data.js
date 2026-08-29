@@ -100,7 +100,8 @@ TEMPO Slider という DJ向けのブラウザ拡張機能（Chrome / Firefox）
       cover: 'assets/discography/voices.jpg',
       links: [
         { label: 'Bandcamp', url: 'https://xtal-jp.bandcamp.com/album/voices' },
-        { label: 'Streaming', url: 'https://album.link/i/1810029937' }
+        { label: 'Apple Music', url: 'https://music.apple.com/jp/album/voices-single/1810029937' },
+        { label: 'Spotify', url: 'https://open.spotify.com/album/1iEokRazattrY3nivVFgqg' }
       ]
     },
     {
@@ -115,36 +116,45 @@ TEMPO Slider という DJ向けのブラウザ拡張機能（Chrome / Firefox）
       title: 'CROSSING PARK Part.1 & 2', year: 2023,
       cover: 'assets/discography/crossing-park.jpg',
       links: [
-        { label: 'Bandcamp', url: 'https://xtal-jp.bandcamp.com/album/crossing-park-part-1-2' }
-        // { label: 'Spotify', url: '' }  // ← ストリーミングにあれば追記
+        { label: 'Bandcamp', url: 'https://xtal-jp.bandcamp.com/album/crossing-park-part-1-2' },
+        { label: 'Apple Music', url: 'https://music.apple.com/jp/album/crossing-park-pt-1-2-ep/1688023377' },
+        { label: 'Spotify', url: 'https://open.spotify.com/album/7BuyosgquDTLnUVkSGqbT2' }
       ]
     },
     {
       title: 'Lost And Found (Extended Version)', year: 2022, note: '(((さらうんど)))',
       cover: 'assets/discography/lost-and-found.jpg',
       links: [
-        { label: 'Bandcamp', url: 'https://xtal-jp.bandcamp.com/album/lost-and-found-extended-version' }
+        { label: 'Bandcamp', url: 'https://xtal-jp.bandcamp.com/album/lost-and-found-extended-version' },
+        { label: 'Apple Music', url: 'https://music.apple.com/jp/album/lost-and-found-extended-version-single/1845051927' },
+        { label: 'Spotify', url: 'https://open.spotify.com/intl-ja/album/76KuMtBuiGt7jL7mtZS5fl' }
       ]
     },
     {
       title: 'Crazy Fool / Days New', year: 2022,
       cover: 'assets/discography/crazy-fool.jpg',
       links: [
-        { label: 'Bandcamp', url: 'https://xtal-jp.bandcamp.com/album/crazy-fool-days-new' }
+        { label: 'Bandcamp', url: 'https://xtal-jp.bandcamp.com/album/crazy-fool-days-new' },
+        { label: 'Apple Music', url: 'https://music.apple.com/jp/album/crazy-fool-days-new-single/1627777212' },
+        { label: 'Spotify', url: 'https://open.spotify.com/album/4VqSD1YXqf4pOLkt9NpzzW' }
       ]
     },
     {
       title: 'QUIET SPACE FOR QUIET LIFE Part.1 & 2', year: 2021,
       cover: 'assets/discography/quiet-space.jpg',
       links: [
-        { label: 'Bandcamp', url: 'https://xtal-jp.bandcamp.com/album/quiet-space-for-quiet-life-part-1-2' }
+        { label: 'Bandcamp', url: 'https://xtal-jp.bandcamp.com/album/quiet-space-for-quiet-life-part-1-2' },
+        { label: 'Apple Music', url: 'https://music.apple.com/jp/album/quiet-space-for-quiet-life-pts-1-2-ep/1594347305' },
+        { label: 'Spotify', url: 'https://open.spotify.com/album/1pwQGSXQWBJUNHMhGaNP9j' }
       ]
     },
     {
       title: 'Aburelu', year: 2020, note: 'Cizima',
       cover: 'assets/discography/aburelu.jpg',
       links: [
-        { label: 'Bandcamp', url: 'https://xtal-jp.bandcamp.com/album/aburelu' }
+        { label: 'Bandcamp', url: 'https://xtal-jp.bandcamp.com/album/aburelu' },
+        { label: 'Apple Music', url: 'https://music.apple.com/jp/album/aburelu/1615538317' },
+        { label: 'Spotify', url: 'https://open.spotify.com/album/340eX8v0TRFYTnF4OMDbKl' }
       ]
     },
     {
@@ -158,7 +168,9 @@ TEMPO Slider という DJ向けのブラウザ拡張機能（Chrome / Firefox）
       title: 'Skygazer', year: 2016, note: 'Crue-L Records',
       cover: 'assets/discography/skygazer.jpg',
       links: [
-        { label: 'Bandcamp', url: 'https://xtal-jp.bandcamp.com/album/skygazer' }
+        { label: 'Bandcamp', url: 'https://xtal-jp.bandcamp.com/album/skygazer' },
+        { label: 'Apple Music', url: 'https://music.apple.com/jp/album/skygazer/1571498702' },
+        { label: 'Spotify', url: 'https://open.spotify.com/album/5Ky8LTuZHAoQ5Q4NRib50P' }
       ]
     }
   ],
