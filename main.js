@@ -117,11 +117,19 @@
     parts.push('<div class="ev__date">' + fmtDate(ev.date) + '</div>');
     var meta = [];
     if (ev.type) meta.push('<span class="ev__type">' + esc(ev.type.toUpperCase()) + '</span>');
-    meta.push('<span class="ev__title">' + esc(ev.title || '') + '</span>');
+    // イベント名がある時は「イベント名 at 会場」。無い時は会場名を見出しに。
+    var head;
+    if (ev.title) {
+      head = '<span class="ev__title">' + esc(ev.title) + '</span>';
+      if (ev.venue) head += '<span class="ev__at"> at ' + esc(ev.venue) + '</span>';
+    } else {
+      head = '<span class="ev__title">' + esc(ev.venue || '') + '</span>';
+    }
+    meta.push(head);
     parts.push('<div class="ev__head">' + meta.join(' ') + '</div>');
 
-    var place = [ev.venue, ev.city].filter(Boolean).map(esc).join(' · ');
-    if (place) parts.push('<div class="ev__place">' + place + '</div>');
+    // 会場はイベント名の後に入れたので、下の行は都市のみ
+    if (ev.city) parts.push('<div class="ev__place">' + esc(ev.city) + '</div>');
     if (ev.note) parts.push('<div class="ev__note">' + esc(ev.note) + '</div>');
 
     var links = [];
