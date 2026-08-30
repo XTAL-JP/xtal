@@ -39,7 +39,7 @@
   /* ---- プロフィール ---- */
   if (D.profile) {
     var P = D.profile;
-    if (P.name) el('name').textContent = P.name;
+    // 見出しはロゴ画像（index.html に配置済み）。テキストでは上書きしない。
     if (P.tagline) el('tagline').textContent = P.tagline;
 
     var html = '';
@@ -338,7 +338,9 @@
     el('contact-section').style.display = 'none';
   }
 
-  /* ---- フッター（コピーライトのみ） ---- */
+  /* ---- フッター（エンブレム＋コピーライト） ---- */
   var year = new Date().getFullYear();
-  el('foot').innerHTML = '<div class="foot__copy">© ' + year + ' XTAL</div>';
+  el('foot').innerHTML =
+    '<img class="foot__logo" src="assets/xtal-emblem.svg" alt="XTAL" width="60" height="60" />' +
+    '<div class="foot__copy">© ' + year + ' XTAL</div>';
 })();
