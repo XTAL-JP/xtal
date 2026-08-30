@@ -47,26 +47,38 @@
       html += '<img class="bio__photo" src="' + esc(P.photo) + '" alt="' + esc(P.name || 'XTAL') +
         '" width="1000" height="1250" loading="lazy" />';
     }
-    var hasJa = !!P.bioJa;
-    if (hasJa) {
-      html += '<div class="bio__toggle">' +
-        '<button type="button" class="bio__lang is-active" data-lang="en">EN</button>' +
-        '<button type="button" class="bio__lang" data-lang="ja">日本語</button></div>';
+    // 掲載する言語（存在するものだけ・この順で表示）
+    var langs = [];
+    if (P.bio)   langs.push({ code: 'en', label: 'EN',     text: P.bio });
+    if (P.bioJa) langs.push({ code: 'ja', label: '日本語',  text: P.bioJa });
+    if (P.bioKo) langs.push({ code: 'ko', label: '한국어',  text: P.bioKo });
+
+    // 2言語以上あるときだけ切替ボタンを出す
+    if (langs.length > 1) {
+      html += '<div class="bio__toggle">';
+      langs.forEach(function (l, i) {
+        html += '<button type="button" class="bio__lang' + (i === 0 ? ' is-active' : '') +
+          '" data-lang="' + l.code + '">' + l.label + '</button>';
+      });
+      html += '</div>';
     }
-    if (P.bio) html += '<div class="bio__text" id="bio-en" lang="en">' + paras(P.bio) + '</div>';
-    if (hasJa) html += '<div class="bio__text" id="bio-ja" lang="ja" hidden>' + paras(P.bioJa) + '</div>';
+    langs.forEach(function (l, i) {
+      html += '<div class="bio__text" id="bio-' + l.code + '" lang="' + l.code + '"' +
+        (i === 0 ? '' : ' hidden') + '>' + paras(l.text) + '</div>';
+    });
     el('bio').innerHTML = html;
 
-    if (hasJa) {
+    if (langs.length > 1) {
       var btns = el('bio').querySelectorAll('.bio__lang');
       Array.prototype.forEach.call(btns, function (btn) {
         btn.addEventListener('click', function () {
-          var en = btn.getAttribute('data-lang') === 'en';
+          var code = btn.getAttribute('data-lang');
           Array.prototype.forEach.call(btns, function (b) {
             b.classList.toggle('is-active', b === btn);
           });
-          el('bio-en').hidden = !en;
-          el('bio-ja').hidden = en;
+          langs.forEach(function (l) {
+            el('bio-' + l.code).hidden = (l.code !== code);
+          });
         });
       });
     }

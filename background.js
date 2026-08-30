@@ -12,31 +12,27 @@
 
   function rand(min, max) { return min + Math.random() * (max - min); }
 
-  /* 暖色を中心に色数を増やしたパレット（アクセントに寒色も少量） */
+  /* 寒色を中心にしたパレット（ブルー〜シアン〜ティール〜インディゴ〜パープル。
+     アクセントに少量のグリーンとマゼンタ） */
   function pickColor() {
     var r = Math.random();
-    if (r < 0.13)  return { h: rand(0, 10),    s: rand(85, 98),  l: rand(46, 55) };   // 赤
-    if (r < 0.28)  return { h: rand(10, 22),   s: rand(88, 100), l: rand(48, 57) };   // コーラル
-    if (r < 0.43)  return { h: rand(22, 34),   s: rand(90, 100), l: rand(46, 55) };   // オレンジ
-    if (r < 0.54)  return { h: rand(34, 44),   s: rand(85, 98),  l: rand(48, 56) };   // アンバー
-    if (r < 0.62)  return { h: rand(40, 50),   s: rand(80, 92),  l: rand(50, 58) };   // ゴールド
-    if (r < 0.68)  return { h: rand(28, 44),   s: rand(65, 88),  l: rand(54, 62) };   // ピーチ
-    if (r < 0.72)  return { h: rand(335, 352), s: rand(70, 88),  l: rand(52, 60) };   // ローズ
-    if (r < 0.79)  return { h: rand(305, 330), s: rand(60, 82),  l: rand(52, 60) };   // マゼンタ
-    if (r < 0.84)  return { h: rand(275, 300), s: rand(55, 78),  l: rand(52, 60) };   // パープル
-    if (r < 0.885) return { h: rand(250, 275), s: rand(52, 74),  l: rand(52, 60) };   // インディゴ
-    if (r < 0.925) return { h: rand(215, 245), s: rand(55, 78),  l: rand(50, 60) };   // ブルー
-    if (r < 0.96)  return { h: rand(185, 210), s: rand(58, 80),  l: rand(48, 58) };   // シアン
-    if (r < 0.985) return { h: rand(165, 185), s: rand(55, 76),  l: rand(46, 56) };   // ティール
-    return         { h: rand(140, 165), s: rand(52, 74),  l: rand(46, 56) };          // グリーン
+    if (r < 0.22)  return { h: rand(215, 240), s: rand(70, 92), l: rand(48, 58) };   // ブルー
+    if (r < 0.40)  return { h: rand(198, 215), s: rand(68, 90), l: rand(50, 60) };   // スカイ
+    if (r < 0.56)  return { h: rand(182, 198), s: rand(60, 84), l: rand(48, 58) };   // シアン
+    if (r < 0.68)  return { h: rand(162, 182), s: rand(55, 80), l: rand(46, 56) };   // ティール
+    if (r < 0.80)  return { h: rand(240, 262), s: rand(58, 80), l: rand(52, 62) };   // インディゴ
+    if (r < 0.90)  return { h: rand(262, 286), s: rand(52, 76), l: rand(52, 62) };   // パープル
+    if (r < 0.96)  return { h: rand(286, 308), s: rand(46, 68), l: rand(52, 60) };   // バイオレット
+    return         { h: rand(140, 165), s: rand(48, 70), l: rand(46, 56) };          // グリーン（少量アクセント）
   }
 
-  /* レイヤー定義（bloom=true は咲いて消える／false は常在してゆっくり脈動） */
+  /* レイヤー定義（bloom=true は咲いて消える／false は常在してゆっくり脈動）
+     st（伸長率）は 1.0〜1.25 に抑え、細長い形を避けてほぼ真円にする。
+     細長さの主因だった streak レイヤーは廃止。 */
   var LAYERS = {
-    large:  { rMin: 0.30, rMax: 0.60, stMin: 1.0, stMax: 2.6, aMin: 0.30, aMax: 0.46, lBoost: 0, lfMin: 0.05, lfMax: 0.12, bloom: false },
-    detail: { rMin: 0.10, rMax: 0.26, stMin: 1.0, stMax: 2.4, aMin: 0.22, aMax: 0.38, lBoost: 2, lfMin: 0.12, lfMax: 0.30, bloom: true },
-    fil:    { rMin: 0.05, rMax: 0.14, stMin: 1.4, stMax: 3.4, aMin: 0.16, aMax: 0.28, lBoost: 3, lfMin: 0.14, lfMax: 0.34, bloom: true },
-    streak: { rMin: 0.06, rMax: 0.12, stMin: 3.5, stMax: 7.0, aMin: 0.14, aMax: 0.24, lBoost: 0, lfMin: 0.10, lfMax: 0.24, bloom: true }
+    large:  { rMin: 0.30, rMax: 0.60, stMin: 1.0, stMax: 1.18, aMin: 0.30, aMax: 0.46, lBoost: 0, lfMin: 0.05, lfMax: 0.12, bloom: false },
+    detail: { rMin: 0.10, rMax: 0.26, stMin: 1.0, stMax: 1.20, aMin: 0.22, aMax: 0.38, lBoost: 2, lfMin: 0.12, lfMax: 0.30, bloom: true },
+    fil:    { rMin: 0.06, rMax: 0.16, stMin: 1.0, stMax: 1.25, aMin: 0.16, aMax: 0.28, lBoost: 3, lfMin: 0.14, lfMax: 0.34, bloom: true }
   };
 
   function makeCell(layer) {
@@ -75,23 +71,22 @@
     n = Math.floor(rand(5, 7));  for (i = 0; i < n; i++) cells.push(makeCell(LAYERS.large));
     n = Math.floor(rand(8, 11)); for (i = 0; i < n; i++) cells.push(makeCell(LAYERS.detail));
     n = Math.floor(rand(9, 13)); for (i = 0; i < n; i++) cells.push(makeCell(LAYERS.fil));
-    n = Math.floor(rand(3, 5));  for (i = 0; i < n; i++) cells.push(makeCell(LAYERS.streak));
     darks = [];
     n = Math.floor(rand(3, 5));
     for (i = 0; i < n; i++) darks.push({
       bx: rand(-0.05, 1.05), by: rand(-0.05, 1.15),
       ax: rand(0.03, 0.10), ay: rand(0.03, 0.10), fx: rand(0.04, 0.10), fy: rand(0.04, 0.10),
       px: rand(0, 6.28), py: rand(0, 6.28),
-      r: rand(0.30, 0.78), st: rand(1.0, 2.2), rot: rand(0, Math.PI),
-      h: rand(10, 30), l: rand(3, 8), a: rand(0.65, 0.9)
+      r: rand(0.30, 0.78), st: rand(1.0, 1.25), rot: rand(0, Math.PI),
+      h: rand(205, 235), l: rand(3, 8), a: rand(0.65, 0.9)
     });
     amb = {
       bx: rand(0.3, 0.7), by: rand(0.3, 0.6), ax: rand(0.05, 0.14), ay: rand(0.04, 0.12),
       fx: rand(0.05, 0.12), fy: rand(0.05, 0.12), px: rand(0, 6.28), py: rand(0, 6.28),
-      r: rand(0.68, 0.98), hue: rand(15, 42), l: rand(34, 42), a: rand(0.6, 0.78),
+      r: rand(0.68, 0.98), hue: rand(200, 235), l: rand(34, 42), a: rand(0.6, 0.78),
       pulse: rand(0.1, 0.25), pf: rand(0.06, 0.14), pp: rand(0, 6.28)
     };
-    baseHue = rand(15, 30);
+    baseHue = rand(205, 230);
   }
   build();
 
@@ -205,7 +200,7 @@
     var vg = ctx.createRadialGradient(w * 0.5, h * 0.44, Math.min(w, h) * 0.26,
                                       w * 0.5, h * 0.5, Math.max(w, h) * 0.82);
     vg.addColorStop(0, 'rgba(0,0,0,0)');
-    vg.addColorStop(1, 'rgba(8,4,2,0.48)');
+    vg.addColorStop(1, 'rgba(2,5,12,0.5)');
     ctx.fillStyle = vg;
     ctx.fillRect(0, 0, w, h);
 
