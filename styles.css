@@ -319,7 +319,7 @@ body {
   transform: rotate(-45deg);
   transition: transform 0.2s ease;
 }
-.ev-year[open] > summary::before { transform: rotate(45deg); }
+.ev-year.is-open > summary::before { transform: rotate(45deg); }
 .ev-year > summary:hover { color: var(--ink); }
 .ev-year__count { font-family: var(--body-font); font-weight: 400; font-size: 12px; letter-spacing: 0.06em; opacity: 0.7; }
 /* 年内のイベント一覧：最後の項目の下線は年の枠線と重なるため消す */

@@ -194,8 +194,75 @@
       });
     }
     el('schedule').innerHTML = html;
+    bindYearAccordions();
   } else {
     el('schedule-section').style.display = 'none';
+  }
+
+  /* 過去分アコーディオンの開閉アニメ（高さ＋フェード） */
+  function bindYearAccordions() {
+    var reduce = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    var items = el('schedule').querySelectorAll('.ev-year');
+    Array.prototype.forEach.call(items, function (d) {
+      var summary = d.querySelector('summary');
+      var body = d.querySelector('.events');
+      if (!summary || !body) return;
+      summary.addEventListener('click', function (e) {
+        e.preventDefault();
+        if (d.classList.contains('is-animating')) return;
+
+        // モーション控えめ設定：即時トグル
+        if (reduce) {
+          d.open = !d.open;
+          d.classList.toggle('is-open', d.open);
+          return;
+        }
+
+        var opening = !d.open;
+        d.classList.add('is-animating');
+
+        if (opening) {
+          d.open = true;                 // 中身を表示可能に
+          d.classList.add('is-open');    // シェブロンを回転
+          var h = body.scrollHeight;
+          body.style.overflow = 'hidden';
+          body.style.height = '0px';
+          body.style.opacity = '0';
+          void body.offsetHeight;        // 開始値を確定させる（強制リフロー）
+          body.style.transition = 'height 0.30s ease, opacity 0.30s ease';
+          body.style.height = h + 'px';
+          body.style.opacity = '1';
+          onEnd(300, function () {
+            body.style.height = body.style.overflow = body.style.opacity = body.style.transition = '';
+            d.classList.remove('is-animating');
+          });
+        } else {
+          d.classList.remove('is-open');
+          var hc = body.scrollHeight;
+          body.style.overflow = 'hidden';
+          body.style.height = hc + 'px';
+          body.style.opacity = '1';
+          void body.offsetHeight;        // 開始値を確定させる（強制リフロー）
+          body.style.transition = 'height 0.28s ease, opacity 0.28s ease';
+          body.style.height = '0px';
+          body.style.opacity = '0';
+          onEnd(280, function () {
+            d.open = false;              // アニメ後に閉じる
+            body.style.height = body.style.overflow = body.style.opacity = body.style.transition = '';
+            d.classList.remove('is-animating');
+          });
+        }
+
+        // transitionend で完了処理。発火しない場合に備え、時間経過でも必ず後始末する
+        function onEnd(ms, cb) {
+          var done = false;
+          function fin() { if (done) return; done = true; body.removeEventListener('transitionend', te); cb(); }
+          function te(ev) { if (ev.target === body && ev.propertyName === 'height') fin(); }
+          body.addEventListener('transitionend', te);
+          setTimeout(fin, ms + 80);
+        }
+      });
+    });
   }
 
   /* ---- Discography ---- */
