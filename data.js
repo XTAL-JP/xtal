@@ -73,16 +73,22 @@ TEMPO Slider という DJ向けのブラウザ拡張機能（Chrome / Firefox）
    *   - 終わったイベントも消さずに残ります（Past 側に表示）。
    *   - DJ録音を SoundCloud 等にアップしたら、その項目に recording を1行足すと
    *     「▶ Recording」リンクが出ます。
-   *   - type は "dj" か "live"。city / links / recording は任意。
+   *   - type は "dj" か "live"。venue（会場）/ city / time（開演）/ price（料金）/
+   *     note（補足）/ links / recording は任意。title はパーティー名、venue は会場名。
    */
   schedule: [
     { date: '2026-08-29', title: 'MY',                     city: 'Tokyo',    type: 'dj' },
-    { date: '2026-09-03', title: 'Bar Himitsu',            city: 'Nagano',   type: 'dj' },
-    { date: '2026-09-18', title: 'Solfa', city: 'Tokyo', type: 'dj', note: 'as Traks Boys' },
-    { date: '2026-10-02', title: 'Mitsuki',                city: 'Tokyo',    type: 'dj' },
-    { date: '2026-10-03', title: 'Dende',                  city: 'Kanazawa', type: 'dj' },
-    { date: '2026-11-01', title: 'Kata',                   city: 'Tokyo',    type: 'dj' },
-    { date: '2026-11-21', title: 'Mago',                   city: 'Nagoya',   type: 'dj' },
+    { date: '2026-09-03', title: 'TechMok', venue: 'Bar Himitsu', city: 'Nagano', type: 'dj',
+      time: '21:00–', price: 'Free entry (please tip the DJs)' },
+    { date: '2026-09-18', title: 'solfa 18TH ANNIVERSARY -DAY1-', city: 'Tokyo', type: 'dj', note: 'as Traks Boys',
+      time: '21:00–05:00', price: 'Door ¥2,500 / Adv ¥2,300 / Under 23 ¥1,500' },
+    { date: '2026-10-02', title: 'studio mule', venue: 'Mitsuki', city: 'Tokyo', type: 'dj',
+      time: '23:00–', price: '¥2,000' },
+    { date: '2026-10-03', title: 'Bliss Wave', venue: 'Dende', city: 'Kanazawa', type: 'dj',
+      time: '20:00–', price: 'Door ¥2,500 / Under 23 ¥2,000' },
+    { date: '2026-11-01', title: 'ONSOON presents 超OVER50 with Fuzz TRAXX', venue: 'Kata', city: 'Tokyo', type: 'dj',
+      note: '〜ヤバさ満点くんの帰還〜', time: '15:00–22:00', price: '¥3,500 (1 drink + free zine)' },
+    { date: '2026-11-21', title: 'OSKA', venue: 'Mago', city: 'Nagoya', type: 'dj' },
     {
       date: '2026-08-21',
       title: 'Photochemical Smog',

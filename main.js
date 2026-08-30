@@ -142,6 +142,11 @@
 
     // 会場はイベント名の後に入れたので、下の行は都市のみ
     if (ev.city) parts.push('<div class="ev__place">' + esc(ev.city) + '</div>');
+    // 開演時間・料金（任意）
+    var infos = [];
+    if (ev.time) infos.push('<span class="ev__time">' + esc(ev.time) + '</span>');
+    if (ev.price) infos.push('<span class="ev__price">' + esc(ev.price) + '</span>');
+    if (infos.length) parts.push('<div class="ev__info">' + infos.join('') + '</div>');
     if (ev.note) parts.push('<div class="ev__note">' + esc(ev.note) + '</div>');
 
     var links = [];
