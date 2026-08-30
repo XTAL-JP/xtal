@@ -323,9 +323,17 @@
   /* ---- Contact（Get in Touch） ---- */
   if (D.contact && D.contact.url) {
     var c = D.contact;
+    // 細線の封筒アイコン（currentColor 継承・文字サイズに追従）
+    var mailIcon =
+      '<svg class="contact-cta__icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" ' +
+      'stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">' +
+      '<rect x="3" y="5" width="18" height="14" rx="2.5"/>' +
+      '<path d="M3.5 7 12 13 20.5 7"/></svg>';
     el('contact').innerHTML =
       (c.note ? '<p class="contact__note">' + esc(c.note) + '</p>' : '') +
-      '<a class="contact-cta" href="' + esc(c.url) + '">' + esc(c.label || 'Contact') + '</a>';
+      '<a class="contact-cta" href="' + esc(c.url) + '">' +
+        mailIcon + '<span class="contact-cta__label">' + esc(c.label || 'Contact') + '</span>' +
+      '</a>';
   } else {
     el('contact-section').style.display = 'none';
   }

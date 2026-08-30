@@ -409,7 +409,9 @@ a.news__title:hover { border-bottom-color: var(--ink); }
 }
 
 .contact-cta {
-  display: inline-block;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.32em;
   font-family: var(--display-font);
   font-size: clamp(30px, 7vw, 52px);
   font-weight: 700;
@@ -417,11 +419,22 @@ a.news__title:hover { border-bottom-color: var(--ink); }
   text-transform: uppercase;
   color: var(--ink);              /* 白（オフホワイト） */
   text-decoration: none;
+  transition: opacity 0.2s ease;
+}
+/* 細線の封筒アイコン（文字サイズに追従） */
+.contact-cta__icon {
+  width: 0.82em;
+  height: 0.82em;
+  flex: none;
+  transform: translateY(0.03em);  /* 大文字ベースラインとの光学調整 */
+}
+/* 下線アクセントはテキスト側にだけ付ける（アイコンには付けない） */
+.contact-cta__label {
   border-bottom: 2px solid rgba(245, 241, 234, 0.45);
   padding-bottom: 4px;
-  transition: border-color 0.2s ease, opacity 0.2s ease;
+  transition: border-color 0.2s ease;
 }
-.contact-cta:hover { border-bottom-color: var(--ink); }
+.contact-cta:hover .contact-cta__label { border-bottom-color: var(--ink); }
 .foot__copy {
   margin-top: 14px;
   font-size: 12px;
