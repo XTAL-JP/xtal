@@ -291,7 +291,8 @@ body {
   border-bottom: 1px solid var(--line);
 }
 .ev__link:hover { border-bottom-color: var(--ink); }
-.ev--past { opacity: 0.6; }
+/* 過去分は年アコーディオンで折りたたむため、テキストは減光しない（opacity:1） */
+.ev--past { opacity: 1; }
 
 /* 過去分：年ごとの折りたたみ（ロード時は閉じ・年クリックで展開） */
 .ev-year { border-bottom: 1px solid var(--line); }
