@@ -243,6 +243,10 @@ body {
   border-color: var(--ink);
   background: rgba(0, 0, 0, 0.28);
 }
+/* 言語切替のフェード（＋わずかな上下移動） */
+.bio__text { opacity: 1; transform: none; transition: opacity 0.25s ease, transform 0.25s ease; }
+.bio__text.is-leaving { opacity: 0; transform: translateY(-4px); }   /* 退場：上へ薄く */
+.bio__text.is-entering { opacity: 0; transform: translateY(4px); }   /* 入場開始：下から薄く */
 .bio__text p {
   margin: 0 0 14px;
   font-size: 15px;

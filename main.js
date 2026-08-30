@@ -70,17 +70,48 @@
 
     if (langs.length > 1) {
       var btns = el('bio').querySelectorAll('.bio__lang');
+      var reduce = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+      var switching = false;
       Array.prototype.forEach.call(btns, function (btn) {
         btn.addEventListener('click', function () {
           var code = btn.getAttribute('data-lang');
+          var current = el('bio').querySelector('.bio__text:not([hidden])');
+          var next = el('bio-' + code);
+          if (switching || current === next) return;
+
           Array.prototype.forEach.call(btns, function (b) {
             b.classList.toggle('is-active', b === btn);
           });
-          langs.forEach(function (l) {
-            el('bio-' + l.code).hidden = (l.code !== code);
+
+          // モーション控えめ設定：即時切替
+          if (reduce || !current) {
+            langs.forEach(function (l) { el('bio-' + l.code).hidden = (l.code !== code); });
+            return;
+          }
+
+          switching = true;
+          // 現在の言語をフェードアウト → 差し替え → 次の言語をフェードイン
+          current.classList.add('is-leaving');
+          onFade(current, function () {
+            current.classList.remove('is-leaving');
+            current.hidden = true;
+            next.hidden = false;
+            next.classList.add('is-entering');
+            void next.offsetHeight;              // 開始値を確定（強制リフロー）
+            next.classList.remove('is-entering'); // フェードイン開始
+            onFade(next, function () { switching = false; });
           });
         });
       });
+
+      // opacity トランジション完了で cb（未発火に備えタイムアウトの保険つき）
+      function onFade(elm, cb) {
+        var done = false;
+        function fin() { if (done) return; done = true; elm.removeEventListener('transitionend', te); cb(); }
+        function te(ev) { if (ev.target === elm && ev.propertyName === 'opacity') fin(); }
+        elm.addEventListener('transitionend', te);
+        setTimeout(fin, 320);
+      }
     }
   }
 
