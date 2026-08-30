@@ -293,6 +293,39 @@ body {
 .ev__link:hover { border-bottom-color: var(--ink); }
 .ev--past { opacity: 0.6; }
 
+/* 過去分：年ごとの折りたたみ（ロード時は閉じ・年クリックで展開） */
+.ev-year { border-bottom: 1px solid var(--line); }
+.ev-year > summary {
+  list-style: none;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 15px 2px;
+  font-family: var(--display-font);
+  font-size: 16px;
+  font-weight: 600;
+  letter-spacing: 0.14em;
+  color: var(--ink-dim);
+  transition: color 0.2s ease;
+}
+.ev-year > summary::-webkit-details-marker { display: none; }
+/* 開閉インジケータ（右向き→開くと下向き） */
+.ev-year > summary::before {
+  content: '';
+  width: 7px; height: 7px;
+  border-right: 1.5px solid currentColor;
+  border-bottom: 1.5px solid currentColor;
+  transform: rotate(-45deg);
+  transition: transform 0.2s ease;
+}
+.ev-year[open] > summary::before { transform: rotate(45deg); }
+.ev-year > summary:hover { color: var(--ink); }
+.ev-year__count { font-family: var(--body-font); font-weight: 400; font-size: 12px; letter-spacing: 0.06em; opacity: 0.7; }
+/* 年内のイベント一覧：最後の項目の下線は年の枠線と重なるため消す */
+.ev-year .events { padding-bottom: 4px; }
+.ev-year .events .ev:last-child { border-bottom: none; }
+
 /* ---- Discography ---- */
 .disco-grid {
   list-style: none;

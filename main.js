@@ -133,12 +133,13 @@
     var head;
     if (ev.title) {
       head = '<span class="ev__title">' + esc(ev.title) + '</span>';
+      // サブタイトルはパーティー名の一部として、会場（at ...）より前に置く
+      if (ev.subtitle) head += '<span class="ev__subtitle">' + esc(ev.subtitle) + '</span>';
       if (ev.venue) head += '<span class="ev__at"> at ' + esc(ev.venue) + '</span>';
     } else {
       head = '<span class="ev__title">' + esc(ev.venue || '') + '</span>';
+      if (ev.subtitle) head += '<span class="ev__subtitle">' + esc(ev.subtitle) + '</span>';
     }
-    // サブタイトル（パーティー名の隣に小さく表示）
-    if (ev.subtitle) head += '<span class="ev__subtitle">' + esc(ev.subtitle) + '</span>';
     meta.push(head);
     parts.push('<div class="ev__head">' + meta.join(' ') + '</div>');
 
@@ -175,8 +176,22 @@
         upcoming.map(function (e) { return scheduleItem(e, false); }).join('') + '</ul>';
     }
     if (past.length) {
-      html += '<h3 class="sub">Past</h3><ul class="events">' +
-        past.map(function (e) { return scheduleItem(e, true); }).join('') + '</ul>';
+      // 過去分は年ごとにまとめ、ロード時は閉じておく（年をクリックで展開）
+      var byYear = {};
+      past.forEach(function (e) {
+        var y = (e.date || '').slice(0, 4) || 'Other';
+        (byYear[y] = byYear[y] || []).push(e);
+      });
+      var years = Object.keys(byYear).sort(function (a, b) { return a < b ? 1 : -1; }); // 新しい年が上
+      html += '<h3 class="sub">Past</h3>';
+      years.forEach(function (y) {
+        html += '<details class="ev-year">' +
+          '<summary class="ev-year__label">' + esc(y) +
+          '<span class="ev-year__count">' + byYear[y].length + '</span></summary>' +
+          '<ul class="events">' +
+          byYear[y].map(function (e) { return scheduleItem(e, true); }).join('') +
+          '</ul></details>';
+      });
     }
     el('schedule').innerHTML = html;
   } else {
