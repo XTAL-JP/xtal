@@ -121,6 +121,13 @@ TEMPO Slider という DJ向けのブラウザ拡張機能（Chrome / Firefox）
       ]
     },
     {
+      title: 'Contact: XTAL (DJ Mix)', year: 2024, note: 'Global Hearts DJ Mix',
+      cover: 'assets/discography/contact-dj-mix.jpg',
+      links: [
+        { label: 'Apple Music', url: 'https://music.apple.com/jp/album/contact-xtal-dj-mix/1781317663' }
+      ]
+    },
+    {
       title: 'EKO', year: 2024, note: 'Kakubarhythm',
       cover: 'assets/discography/eko.jpg',
       links: [
@@ -134,6 +141,13 @@ TEMPO Slider という DJ向けのブラウザ拡張機能（Chrome / Firefox）
       links: [
         { label: 'Apple Music', url: 'https://music.apple.com/jp/album/the-sun-ep-single/1839189943' },
         { label: 'Spotify', url: 'https://open.spotify.com/album/7v4YnRuEl2Q37yWnUVqHLr' }
+      ]
+    },
+    {
+      title: 'CRUE-LWAVE II', year: 2024, note: 'XTAL & KEITA SANO — “Happy Day” / Crue-L Records',
+      cover: 'assets/discography/crue-lwave-2.jpg',
+      links: [
+        { label: 'Crue-L Shop', url: 'https://crue-l.shop/items/66a8fd06c362b304239a319d' }
       ]
     },
     {
