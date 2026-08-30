@@ -12,18 +12,24 @@
 
   function rand(min, max) { return min + Math.random() * (max - min); }
 
-  /* 寒色を中心にしたパレット（ブルー〜シアン〜ティール〜インディゴ〜パープル。
-     アクセントに少量のグリーンとマゼンタ） */
+  /* 暖色と寒色を半々で混ぜたパレット。
+     暖色：赤〜コーラル〜オレンジ〜アンバー〜ローズ〜マゼンタ
+     寒色：ブルー〜シアン〜ティール〜インディゴ〜パープル ＋ 少量のグリーン */
   function pickColor() {
     var r = Math.random();
-    if (r < 0.22)  return { h: rand(215, 240), s: rand(70, 92), l: rand(48, 58) };   // ブルー
-    if (r < 0.40)  return { h: rand(198, 215), s: rand(68, 90), l: rand(50, 60) };   // スカイ
-    if (r < 0.56)  return { h: rand(182, 198), s: rand(60, 84), l: rand(48, 58) };   // シアン
-    if (r < 0.68)  return { h: rand(162, 182), s: rand(55, 80), l: rand(46, 56) };   // ティール
-    if (r < 0.80)  return { h: rand(240, 262), s: rand(58, 80), l: rand(52, 62) };   // インディゴ
-    if (r < 0.90)  return { h: rand(262, 286), s: rand(52, 76), l: rand(52, 62) };   // パープル
-    if (r < 0.96)  return { h: rand(286, 308), s: rand(46, 68), l: rand(52, 60) };   // バイオレット
-    return         { h: rand(140, 165), s: rand(48, 70), l: rand(46, 56) };          // グリーン（少量アクセント）
+    // --- 暖色（約48%）---
+    if (r < 0.10)  return { h: rand(2, 14),    s: rand(82, 96), l: rand(48, 56) };   // 赤〜コーラル
+    if (r < 0.22)  return { h: rand(16, 30),   s: rand(85, 98), l: rand(48, 57) };   // オレンジ
+    if (r < 0.32)  return { h: rand(32, 46),   s: rand(82, 95), l: rand(50, 58) };   // アンバー/ゴールド
+    if (r < 0.40)  return { h: rand(335, 352), s: rand(68, 88), l: rand(52, 60) };   // ローズ
+    if (r < 0.48)  return { h: rand(300, 325), s: rand(58, 80), l: rand(52, 60) };   // マゼンタ
+    // --- 寒色（約48%）---
+    if (r < 0.62)  return { h: rand(215, 240), s: rand(68, 90), l: rand(50, 60) };   // ブルー
+    if (r < 0.74)  return { h: rand(190, 212), s: rand(62, 86), l: rand(50, 60) };   // シアン/スカイ
+    if (r < 0.84)  return { h: rand(165, 188), s: rand(55, 80), l: rand(46, 56) };   // ティール
+    if (r < 0.94)  return { h: rand(245, 275), s: rand(56, 78), l: rand(52, 62) };   // インディゴ/パープル
+    // --- グリーン アクセント（少量）---
+    return         { h: rand(140, 162), s: rand(48, 70), l: rand(46, 56) };
   }
 
   /* レイヤー定義（bloom=true は咲いて消える／false は常在してゆっくり脈動）
@@ -83,10 +89,13 @@
     amb = {
       bx: rand(0.3, 0.7), by: rand(0.3, 0.6), ax: rand(0.05, 0.14), ay: rand(0.04, 0.12),
       fx: rand(0.05, 0.12), fy: rand(0.05, 0.12), px: rand(0, 6.28), py: rand(0, 6.28),
-      r: rand(0.68, 0.98), hue: rand(200, 235), l: rand(34, 42), a: rand(0.6, 0.78),
+      // アンビエントはリロードごとに暖色/寒色どちらかを引く
+      r: rand(0.68, 0.98), hue: (Math.random() < 0.5 ? rand(18, 40) : rand(200, 232)),
+      l: rand(34, 42), a: rand(0.6, 0.78),
       pulse: rand(0.1, 0.25), pf: rand(0.06, 0.14), pp: rand(0, 6.28)
     };
-    baseHue = rand(205, 230);
+    // ベース暗色もリロードごとに暖/寒どちらか（暖と寒の両方のブロブが映えるよう低彩度・暗め）
+    baseHue = Math.random() < 0.5 ? rand(15, 35) : rand(208, 235);
   }
   build();
 
@@ -200,7 +209,7 @@
     var vg = ctx.createRadialGradient(w * 0.5, h * 0.44, Math.min(w, h) * 0.26,
                                       w * 0.5, h * 0.5, Math.max(w, h) * 0.82);
     vg.addColorStop(0, 'rgba(0,0,0,0)');
-    vg.addColorStop(1, 'rgba(2,5,12,0.5)');
+    vg.addColorStop(1, 'rgba(6,4,9,0.5)');
     ctx.fillStyle = vg;
     ctx.fillRect(0, 0, w, h);
 

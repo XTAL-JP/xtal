@@ -25,14 +25,14 @@ html, body {
   /* iOS Safari はステータスバー下・下部ツールバー背後の領域（セーフエリア/
      オーバースクロール部）を background-image ではなく単色の background-color で
      塗るため、暗い単色を敷いて上下の白い帯が出ないようにする */
-  background-color: #070d16;
+  background-color: #0a0812;
 }
 
 body {
   color: var(--ink);
   overflow-x: hidden; /* 見出しの字間による横はみ出しを防ぐ */
-  /* JS/canvas が使えない場合の寒色フォールバック */
-  background: radial-gradient(120% 90% at 20% 15%, #5c93f3 0%, #2b5f99 35%, #142a44 70%, #070d16 100%);
+  /* JS/canvas が使えない場合の暖色×寒色ブレンドのフォールバック */
+  background: radial-gradient(120% 90% at 20% 15%, #e0834a 0%, #a1527a 38%, #2f5488 70%, #0a0812 100%);
   -webkit-font-smoothing: antialiased;
   text-rendering: optimizeLegibility;
 }

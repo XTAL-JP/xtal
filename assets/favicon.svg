@@ -1,10 +1,10 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" width="64" height="64">
-  <!-- シンプルな暗めの寒色グラデーション -->
+  <!-- 暖色×寒色ブレンドの暗めグラデーション -->
   <defs>
     <linearGradient id="g" x1="0" y1="0" x2="1" y2="1">
-      <stop offset="0"   stop-color="#2b5f99"/>
-      <stop offset="0.55" stop-color="#142a44"/>
-      <stop offset="1"   stop-color="#070d16"/>
+      <stop offset="0"   stop-color="#c06a3a"/>
+      <stop offset="0.55" stop-color="#43385f"/>
+      <stop offset="1"   stop-color="#0a0812"/>
     </linearGradient>
   </defs>
   <rect width="64" height="64" rx="14" fill="url(#g)"/>
