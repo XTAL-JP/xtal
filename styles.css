@@ -457,7 +457,7 @@ a.news__title:hover { border-bottom-color: var(--ink); }
 /* ---- レスポンシブ ---- */
 @media (max-width: 480px) {
   .hero__name { letter-spacing: 0.06em; }
-  .hero__logo { width: clamp(84px, 24vw, 110px); } /* モバイルはさらに小さく */
+  .hero__logo { width: clamp(100px, 28vw, 130px); } /* モバイルはやや小さく */
   .hero__tagline { letter-spacing: 0.16em; }
   .links { gap: 3px 16px; }
   .link { font-size: 13px; }
