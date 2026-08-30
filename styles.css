@@ -167,6 +167,7 @@ body {
   border-radius: 3px;
   background: rgba(0, 0, 0, 0.24);
   padding: 20px 22px;
+  scroll-margin-top: 24px; /* アンカーリンクで飛んだ際に上に少し余白 */
 }
 .post__img { width: 100%; height: auto; border-radius: 2px; margin-bottom: 14px; }
 .post__date { font-size: 12px; letter-spacing: 0.08em; color: var(--ink-dim); margin-bottom: 6px; }

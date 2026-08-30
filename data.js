@@ -48,6 +48,7 @@ var DATA = {
   featured: [
     {
       type: 'post',
+      id: 'tempo-slider',
       date: '2026-06-27',
       title: 'TEMPO Slider — Browser Extension for DJs',
       image: 'assets/featured/tempo-slider.jpg',

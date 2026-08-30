@@ -128,8 +128,8 @@
       if (f.type === 'link') {
         return link(f.url, f.label || f.url, 'release');
       }
-      // 既定：お知らせカード（post）
-      var out = '<article class="post">';
+      // 既定：お知らせカード（post）。f.id があればアンカーリンク用の id を付与
+      var out = '<article class="post"' + (f.id ? ' id="' + esc(f.id) + '"' : '') + '>';
       if (f.image) {
         out += '<img class="post__img" src="' + esc(f.image) + '" alt="' + esc(f.title || '') +
           '" loading="lazy" />';
