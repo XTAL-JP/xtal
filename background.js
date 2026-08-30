@@ -225,7 +225,7 @@
   resize();
   var raf = null, t0 = null;
   // アニメの体感速度。周期が数十秒スケールで静止に見えていたため倍率を掛けて速める
-  var SPEED = 3;
+  var SPEED = 2;
   var reduce = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
   function loop(ts) {
     if (t0 == null) t0 = ts;
