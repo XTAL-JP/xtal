@@ -275,6 +275,7 @@ body {
   color: var(--ink-dim);
 }
 .ev__title { font-family: var(--display-font); font-size: 21px; font-weight: 600; letter-spacing: 0.02em; }
+.ev__subtitle { font-family: var(--display-font); font-size: 14px; font-weight: 600; letter-spacing: 0.02em; color: var(--ink-dim); margin-top: 3px; }
 .ev__at { font-family: var(--display-font); font-weight: 600; font-size: 0.88em; letter-spacing: 0.03em; color: var(--ink-dim); }
 .ev__place { font-size: 13px; color: var(--ink-dim); margin-top: 5px; }
 /* 開演時間・料金（横並び・折返し可） */

@@ -139,6 +139,8 @@
     }
     meta.push(head);
     parts.push('<div class="ev__head">' + meta.join(' ') + '</div>');
+    // サブタイトル（タイトルより小さく表示）
+    if (ev.subtitle) parts.push('<div class="ev__subtitle">' + esc(ev.subtitle) + '</div>');
 
     // 会場はイベント名の後に入れたので、下の行は都市のみ
     if (ev.city) parts.push('<div class="ev__place">' + esc(ev.city) + '</div>');
