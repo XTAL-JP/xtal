@@ -177,7 +177,7 @@ body {
 }
 .post__text p { margin: 0 0 10px; font-size: 14px; line-height: 1.78; color: var(--ink); }
 .post__text p:last-child { margin-bottom: 0; }
-.post__links { margin-top: 14px; display: flex; flex-wrap: wrap; gap: 8px 10px; }
+.post__links { margin-top: 14px; display: flex; flex-wrap: wrap; justify-content: center; gap: 8px 10px; }
 .post__link {
   font-size: 13px; color: var(--ink); text-decoration: none;
   border: 1px solid var(--line); border-radius: 2px; padding: 6px 12px;
