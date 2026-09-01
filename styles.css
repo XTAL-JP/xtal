@@ -449,6 +449,7 @@ a.news__title:hover { border-bottom-color: var(--ink); }
   padding-bottom: 4px;
   transition: border-color 0.2s ease;
 }
+.contact-cta:hover { opacity: 0.7; }
 .contact-cta:hover .contact-cta__label { border-bottom-color: var(--ink); }
 .foot__copy {
   margin-top: 14px;
