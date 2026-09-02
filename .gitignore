@@ -1,3 +1,6 @@
 .DS_Store
 *.log
 .playwright-mcp/
+
+# SNS用スケジュール動画の生成ツール（サイト本体ではない）
+tools/

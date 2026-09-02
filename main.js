@@ -356,4 +356,52 @@
   el('foot').innerHTML =
     '<img class="foot__logo" src="assets/xtal-emblem.svg" alt="XTAL" width="60" height="60" />' +
     '<div class="foot__copy">© ' + year + ' XTAL</div>';
+
+  /* ---- 以降の画像を先読み（スクロールでの遅延描画を防ぐ） ----
+     ユーザーが Schedule 付近を見始めたら、まだ下にある重い画像
+     （Featured画像 → バイオ写真 → Discographyカバー）を DOM 順で
+     バックグラウンド取得してキャッシュを温める。実際の <img> は
+     loading="lazy" のままなので、先読みが間に合えば即描画、
+     間に合わなくても従来どおりスクロール時に読み込まれる（後退なし）。
+     ネットワークを圧迫しないよう同時4本まで・低優先度で取得する。 */
+  (function prefetchBelowFold() {
+    var urls = [];
+    (D.featured || []).forEach(function (f) { if (f && f.image) urls.push(f.image); });
+    if (D.profile && D.profile.photo) urls.push(D.profile.photo);
+    (D.discography || []).forEach(function (r) { if (r && r.cover) urls.push(r.cover); });
+    if (!urls.length) return;
+
+    var started = false;
+    function warm() {
+      if (started) return; started = true;
+      var i = 0, CONCURRENCY = 4;
+      function next() {
+        if (i >= urls.length) return;
+        var img = new Image();
+        try {
+          img.decoding = 'async';
+          if ('fetchPriority' in img) img.fetchPriority = 'low';
+        } catch (e) {}
+        // 成否どちらでも次へ（キャッシュ温めが目的）
+        img.onload = img.onerror = next;
+        img.src = urls[i++];
+      }
+      for (var k = 0; k < CONCURRENCY; k++) next();
+    }
+
+    var target = el('schedule-section');
+    if (target && 'IntersectionObserver' in window) {
+      // rootMargin を広めに取り、Schedule が視界に入る少し手前で先読み開始
+      var io = new IntersectionObserver(function (entries) {
+        for (var j = 0; j < entries.length; j++) {
+          if (entries[j].isIntersecting) { warm(); io.disconnect(); break; }
+        }
+      }, { rootMargin: '300px 0px' });
+      io.observe(target);
+    } else if ('requestIdleCallback' in window) {
+      requestIdleCallback(warm, { timeout: 3000 });
+    } else {
+      setTimeout(warm, 1500);
+    }
+  })();
 })();
