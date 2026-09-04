@@ -80,7 +80,11 @@ TEMPO Slider という DJ向けのブラウザ拡張機能（Chrome / Firefox）
   schedule: [
     { date: '2026-08-29', title: 'MY',                     city: 'Tokyo',    type: 'dj' },
     { date: '2026-09-03', title: 'TechMok', venue: 'Bar Himitsu', city: 'Nagano', type: 'dj',
-      time: '21:00–', price: 'Free entry (please tip the DJs)' },
+      time: '21:00–', price: 'Free entry (please tip the DJs)',
+      recording: 'https://soundcloud.com/crystal-a/photochemical-smog-at-bar-1' },
+    { date: '2026-09-09', title: 'WTW', venue: 'WOMB', city: 'Tokyo', type: 'dj',
+      note: '2F — with Manaha, Rat, STACK',
+      time: 'Open 23:00', price: 'Door ¥1,500' },
     { date: '2026-09-18', title: 'solfa 18TH ANNIVERSARY -DAY1-', venue: 'solfa', city: 'Tokyo', type: 'dj', note: 'as Traks Boys',
       time: '21:00–05:00', price: 'Door ¥2,500 / Adv ¥2,300 / Under 23 ¥1,500' },
     { date: '2026-10-02', title: 'studio mule', venue: 'Mitsuki', city: 'Tokyo', type: 'dj',
