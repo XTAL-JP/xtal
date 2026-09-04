@@ -94,7 +94,8 @@ TEMPO Slider という DJ向けのブラウザ拡張機能（Chrome / Firefox）
     { date: '2026-10-03', title: 'Bliss Wave', venue: 'Dende', city: 'Kanazawa', type: 'dj',
       time: '20:00–', price: 'Door ¥2,500 / Under 23 ¥2,000' },
     { date: '2026-11-01', title: 'MONSOON presents 超OVER50 with Fuzz TRAXX', subtitle: '〜ヤバさ満点くんの帰還〜', venue: 'Kata', city: 'Tokyo', type: 'dj',
-      time: '15:00–22:00', price: '¥3,500 (1 drink + free zine)' },
+      time: '15:00–22:00', price: '¥3,500 (1 drink + free zine)',
+      links: [{ label: 'Info', url: 'https://kata-gallery.net/schedule/monsoon_20261101' }] },
     { date: '2026-11-21', title: 'OSKA', venue: 'Mago', city: 'Nagoya', type: 'dj' },
     {
       date: '2026-08-21',
