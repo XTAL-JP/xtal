@@ -51,17 +51,21 @@ var DATA = {
       id: 'tempo-slider',
       date: '2026-06-27',
       title: 'TEMPO Slider — Browser Extension for DJs',
-      image: 'assets/featured/tempo-slider.jpg',
+      image: 'assets/featured/tempo-slider.png',
       body:
 `Just released a browser extension for DJs called TEMPO Slider (Chrome / Firefox). I built this because I wanted to audition tracks online at the same tempo I'd actually play them at in a set.
 
 Supported sites: Bandcamp / Beatport / Traxsource / Discogs (YouTube previews), plus any other site you add. Chrome / Firefox · free · open source. DJs, give it a try — feedback welcome!
 
+New: A 3-band isolator (LOW / MID / HIGH) is now built into the control panel, always visible next to the tempo fader. Turn a band down to cut/kill it, or up to boost it (+6 dB) — just like the isolator on a DJ mixer. Turn all three bands fully down to silence the audio completely. Each band has an ON/OFF toggle and DJM-style tick marks; double-click a knob to return it to 0 dB.
+
 ————
 
 TEMPO Slider という DJ向けのブラウザ拡張機能（Chrome / Firefox）を公開しました。ネットで試聴する時に、実際にDJでプレイする時のように、テンポを変更した状態で検討したいと思い、制作しました。
 
-対応サイト：Bandcamp / Beatport / Traxsource / Discogs（YouTube 試聴）ほか、任意のサイトを追加可能。Chrome / Firefox 対応・無料・オープンソース。DJ の方、ぜひ使ってみてください。フィードバックもお待ちしてます。`,
+対応サイト：Bandcamp / Beatport / Traxsource / Discogs（YouTube 試聴）ほか、任意のサイトを追加可能。Chrome / Firefox 対応・無料・オープンソース。DJ の方、ぜひ使ってみてください。フィードバックもお待ちしてます。
+
+新機能: 3バンドアイソレーター（LOW / MID / HIGH）をコントロールパネルに搭載しました。テンポフェーダーの隣に常時表示され、各バンドを下げてカット/キル、上げて +6dB ブーストできます（DJ ミキサーのアイソレーターと同じ操作感）。3バンドすべてを下げきると音を完全に無音にできます。バンドごとに ON/OFF トグルと DJM 風の目盛り付き。ノブをダブルクリックすると 0dB に戻せます。`,
       links: [
         { label: 'Chrome',  url: 'https://chromewebstore.google.com/detail/tempo-slider/khfoddahloneinahhnejjpjengdaglcl' },
         { label: 'Firefox', url: 'https://addons.mozilla.org/ja/firefox/addon/tempo-slider/' }
