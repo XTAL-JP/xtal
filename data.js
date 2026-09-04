@@ -79,7 +79,7 @@ TEMPO Slider という DJ向けのブラウザ拡張機能（Chrome / Firefox）
    */
   schedule: [
     { date: '2026-08-29', title: 'MY',                     city: 'Tokyo',    type: 'dj' },
-    { date: '2026-09-03', title: 'TechMok', venue: 'Bar Himitsu', city: 'Nagano', type: 'dj',
+    { date: '2026-09-03', title: 'Photochemical Smog', venue: 'Bar Himitsu', city: 'Nagano', type: 'dj',
       time: '21:00–', price: 'Free entry (please tip the DJs)',
       recording: 'https://soundcloud.com/crystal-a/photochemical-smog-at-bar-1' },
     { date: '2026-09-09', title: 'WTW', venue: 'WOMB', city: 'Tokyo', type: 'dj',
