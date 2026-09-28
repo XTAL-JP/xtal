@@ -103,7 +103,7 @@ TEMPO Slider という DJ向けのブラウザ拡張機能（Chrome / Firefox）
       links: [{ label: 'Info', url: 'https://ringofes.info/' }],
       recording: 'https://soundcloud.com/crystal-a/ringo-fes-sep-26th-2026' },
     { date: '2026-10-02', title: 'studio mule', venue: 'Mitsuki', city: 'Tokyo', type: 'dj',
-      note: 'MULEMUSIQ — DJs: shinya okamoto, toshiya kawasaki, XTAL (Traks Boys)',
+      note: 'DJs: shinya okamoto, toshiya kawasaki, XTAL (Traks Boys)',
       time: '23:00–', price: '¥2,000' },
     { date: '2026-10-03', title: 'Bliss Wave', venue: 'Dende', city: 'Kanazawa', type: 'dj',
       note: 'DJs: XTAL, Goodfella GK, Hachio, LEFTOLD, vivacoca / Food: Re:spice',
