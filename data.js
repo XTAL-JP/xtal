@@ -135,6 +135,14 @@ TEMPO Slider という DJ向けのブラウザ拡張機能（Chrome / Firefox）
    */
   discography: [
     {
+      title: 'Off-Axis EP', year: 2026, note: 'Mule Musiq',
+      cover: 'assets/discography/off-axis.jpg',
+      links: [
+        { label: 'Apple Music', url: 'https://music.apple.com/jp/album/off-axis-ep/6805469801' },
+        { label: 'Spotify', url: 'https://open.spotify.com/album/3AuSEAE8YgOpjCx94mKEqq' }
+      ]
+    },
+    {
       title: 'Voices', year: 2025, note: 'XTAL / Inner Science',
       cover: 'assets/discography/voices.jpg',
       links: [
