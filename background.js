@@ -227,7 +227,7 @@
   }
 
   resize();
-  var raf = null, t0 = null, lastDraw = -1e9;
+  var raf = null, lastTs = null, lastDraw = -1e9, animTime = 0;
   // アニメの体感速度。周期が数十秒スケールで静止に見えていたため倍率を掛けて速める
   var SPEED = 2;
   // 描画を約30fpsに間引く（canvasの毎フレーム全面再描画がスクロールの合成と
@@ -247,10 +247,16 @@
   }, { passive: true });
 
   function loop(ts) {
-    if (t0 == null) t0 = ts;
-    if (!scrolling && ts - lastDraw >= FRAME_MS) {
-      lastDraw = ts;
-      render((ts - t0) / 1000 * SPEED);   // 初回フレームを 0 とする相対時間（速度倍率込み）
+    if (lastTs == null) lastTs = ts;
+    var dt = ts - lastTs;               // 前フレームからの実経過時間（ms）
+    lastTs = ts;
+    if (!scrolling) {
+      // アニメ用の時計はスクロール中は進めない。これで「止まったところから再開」になる
+      animTime += dt / 1000 * SPEED;
+      if (ts - lastDraw >= FRAME_MS) {   // 描画は約30fpsに間引く
+        lastDraw = ts;
+        render(animTime);
+      }
     }
     raf = window.requestAnimationFrame(loop);
   }
