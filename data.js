@@ -115,7 +115,9 @@ TEMPO Slider という DJ向けのブラウザ拡張機能（Chrome / Firefox）
     { date: '2026-11-01', title: 'MONSOON presents 超OVER50 with Fuzz TRAXX', subtitle: '〜ヤバさ満点くんの帰還〜', venue: 'Kata', city: 'Tokyo', type: 'dj',
       time: '15:00–22:00', price: '¥3,500 (1 drink + free zine)',
       links: [{ label: 'Info', url: 'https://kata-gallery.net/schedule/monsoon_20261101' }] },
-    { date: '2026-11-21', title: 'OSKA', venue: 'Mago', city: 'Nagoya', type: 'dj' },
+    { date: '2026-11-21', title: 'OSKA feat XTAL', venue: 'Club Mago', city: 'Nagoya', type: 'dj',
+      note: 'OSKA MAIN — feat DJ: XTAL (Traks Boys / (((さらうんど)))) / DJs: KEITA (JACK), JION, SHOINO｜OSKA LOUNGE (AJITO in OSKA) — DJs: FUJI, NODA, REBORN, UTSUNOMIYA / Wine: Paradise nature / Sheesha: shisha&bar owl',
+      time: '22:00–', price: 'Adv/WF ¥2,500 / Door ¥3,000 (+¥500 for 1 drink)' },
     {
       date: '2026-08-21',
       title: 'Photochemical Smog',
