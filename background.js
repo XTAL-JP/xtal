@@ -227,13 +227,20 @@
   }
 
   resize();
-  var raf = null, t0 = null;
+  var raf = null, t0 = null, lastDraw = -1e9;
   // アニメの体感速度。周期が数十秒スケールで静止に見えていたため倍率を掛けて速める
   var SPEED = 2;
+  // 描画を約30fpsに間引く（canvasの毎フレーム全面再描画がスクロールの合成と
+  // メインスレッドを奪い合うため。60→30fpsで再描画回数を半減させ、スクロール中の
+  // ガタつきを軽減する。rAF自体は毎フレーム回し、経過時間で描画要否を判定する）
+  var FRAME_MS = 1000 / 30;
   var reduce = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
   function loop(ts) {
     if (t0 == null) t0 = ts;
-    render((ts - t0) / 1000 * SPEED);   // 初回フレームを 0 とする相対時間（速度倍率込み）
+    if (ts - lastDraw >= FRAME_MS) {
+      lastDraw = ts;
+      render((ts - t0) / 1000 * SPEED);   // 初回フレームを 0 とする相対時間（速度倍率込み）
+    }
     raf = window.requestAnimationFrame(loop);
   }
   if (reduce || !window.requestAnimationFrame) { render(0.5); } // 静止時は少し咲かせた状態で
