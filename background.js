@@ -235,9 +235,20 @@
   // ガタつきを軽減する。rAF自体は毎フレーム回し、経過時間で描画要否を判定する）
   var FRAME_MS = 1000 / 30;
   var reduce = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+  // スクロール中は背景の再描画を止める。canvas 2D 描画はメインスレッドで動き、
+  // スクロールの合成とスレッドを奪い合ってガタつきの主因になるため、スクロール中は
+  // render() をスキップし、スクロールが止まってしばらく（SCROLL_IDLE_MS）経ってから再開する。
+  var scrolling = false, st = null, SCROLL_IDLE_MS = 160;
+  window.addEventListener('scroll', function () {
+    scrolling = true;
+    clearTimeout(st);
+    st = setTimeout(function () { scrolling = false; }, SCROLL_IDLE_MS);
+  }, { passive: true });
+
   function loop(ts) {
     if (t0 == null) t0 = ts;
-    if (ts - lastDraw >= FRAME_MS) {
+    if (!scrolling && ts - lastDraw >= FRAME_MS) {
       lastDraw = ts;
       render((ts - t0) / 1000 * SPEED);   // 初回フレームを 0 とする相対時間（速度倍率込み）
     }
