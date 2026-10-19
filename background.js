@@ -227,13 +227,10 @@
   }
 
   resize();
-  var raf = null, lastTs = null, lastDraw = -1e9, animTime = 0;
+  var raf = null, lastTs = null, animTime = 0;
   // アニメの体感速度。周期が数十秒スケールで静止に見えていたため倍率を掛けて速める
   var SPEED = 2;
-  // 描画を約30fpsに間引く（canvasの毎フレーム全面再描画がスクロールの合成と
-  // メインスレッドを奪い合うため。60→30fpsで再描画回数を半減させ、スクロール中の
-  // ガタつきを軽減する。rAF自体は毎フレーム回し、経過時間で描画要否を判定する）
-  var FRAME_MS = 1000 / 30;
+  // スクロール中は再描画を止める方式にしたので、停止時は毎フレーム（60fps）で描画する。
   var reduce = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
   // スクロール中は背景の再描画を止める。canvas 2D 描画はメインスレッドで動き、
@@ -253,10 +250,7 @@
     if (!scrolling) {
       // アニメ用の時計はスクロール中は進めない。これで「止まったところから再開」になる
       animTime += dt / 1000 * SPEED;
-      if (ts - lastDraw >= FRAME_MS) {   // 描画は約30fpsに間引く
-        lastDraw = ts;
-        render(animTime);
-      }
+      render(animTime);   // 停止時は毎フレーム（60fps）描画
     }
     raf = window.requestAnimationFrame(loop);
   }
