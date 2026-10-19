@@ -147,7 +147,8 @@ TEMPO Slider という DJ向けのブラウザ拡張機能（Chrome / Firefox）
       cover: 'assets/discography/off-axis.jpg',
       links: [
         { label: 'Apple Music', url: 'https://music.apple.com/jp/album/off-axis-ep/6805469801' },
-        { label: 'Spotify', url: 'https://open.spotify.com/album/3AuSEAE8YgOpjCx94mKEqq' }
+        { label: 'Spotify', url: 'https://open.spotify.com/album/3AuSEAE8YgOpjCx94mKEqq' },
+        { label: 'Bandcamp', url: 'https://mulemusiq.bandcamp.com/album/off-axis' }
       ]
     },
     {
