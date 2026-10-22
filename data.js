@@ -12,18 +12,18 @@ var DATA = {
     // 英語バイオ（段落は空行で区切る）
     bio:
       'Active since 1995, XTAL (pronounced “Crystal”) is a DJ and producer best known as one half of Traks Boys with k404 and resident of DK SOUND—a notorious rooftop rave pulsing above Kawasaki’s industrial skyline. He has also been active in several projects, including the band (((Ssssurrounddd))) with Jun Kamoda, a duo with Your Song Is Good guitarist Masatomo Yoshizawa, and a collaboration unit with dance-music producer Keita Sano, consistently releasing new material across these collaborations.\n\n' +
-      'As a solo artist, XTAL released singles on Crue-L Records and Beats In Space Records before putting out his debut album Skygazer (2016, Crue-L Records), followed by Aburelu (2020, self-released on Cizima), and his third album EKO (2024, Kakubarhythm).\n\n' +
+      'As a solo artist, XTAL released singles on Crue-L Records and Beats In Space Records before putting out his debut album Skygazer (2016, Crue-L Records), followed by Aburelu (2020, self-released on Cizima), and his third album EKO (2024, Kakubarhythm). In 2026, he released the Off-Axis EP on mulemusiq.\n\n' +
       'Grounded in club music yet free from stylistic boundaries, XTAL’s DJ sets and productions flexibly move between diverse genres and eras, revealing a sound that is both distinctive and timeless.',
     // 日本語バイオ（Biography セクションの「日本語」トグルで表示）
     bioJa:
       '1995年からDJを開始。川崎工場地帯の某工場屋上にて行われているインダストリアル・レイブパーティー「DK SOUND」で、k404とのTraks BoysとしてレジデントDJを務める。Jun Kamodaとのバンド(((さらうんど)))、Your Song Is Goodのギタリスト吉澤成友とのユニット、ダンス・ミュージック・プロデューサーKeita Sanoとのユニットでも、精力的にリリースを重ねる。\n\n' +
-      'ソロとしては、〈Crue-L Records〉や〈Beats In Space Records〉からシングルをリリースした後、〈Crue-L Records〉からの1stアルバム『Skygazer』（2016年）、自主レーベル〈Cizima〉からの2ndアルバム『Aburelu』（2020年）に続き、〈カクバリズム〉より3rdアルバム『EKO』（2024年）をリリース。\n\n' +
+      'ソロとしては、〈Crue-L Records〉や〈Beats In Space Records〉からシングルをリリースした後、〈Crue-L Records〉からの1stアルバム『Skygazer』（2016年）、自主レーベル〈Cizima〉からの2ndアルバム『Aburelu』（2020年）に続き、〈カクバリズム〉より3rdアルバム『EKO』（2024年）をリリース。2026年には〈mulemusiq〉より『Off-Axis EP』をリリース。\n\n' +
       'クラブ・ミュージックを基点に、多様なジャンルや時代を行き来するフレキシブルなプレイとプロダクションを展開している。',
     // 韓国語バイオ（Biography セクションの「한국어」トグルで表示）
     bioKo:
       '1995년부터 활동을 시작한 XTAL은 DJ이자 프로듀서로, k404와 함께 Traks Boys라는 듀오로 가장 잘 알려져 있다. 또한 카와사키 공업지대의 스카이라인 위에서 펼쳐지는 루프탑 레이브 이벤트 DK SOUND의 레지던트로 활동 중이다.\n\n' +
       '그는 여러 프로젝트를 통해 폭넓은 음악 세계를 펼쳐왔다. Jun Kamoda와 함께한 밴드 (((Surround))), Your Song Is Good의 기타리스트 Masatomo Yoshizawa와의 듀오, 그리고 전자음악 프로듀서 Keita Sano와의 협업 프로젝트 등을 통해 꾸준히 신작을 발표하고 있다.\n\n' +
-      '솔로 활동으로는 Crue-L Records와 Beats In Space Records에서 싱글을 발표한 후, 데뷔 앨범 Skygazer (2016, Crue-L Records), 두 번째 앨범 Aburelu (2020, 자가 레이블 Cizima), 그리고 세 번째 앨범 EKO (2024, Kakubarhythm)을 발표했다.\n\n' +
+      '솔로 활동으로는 Crue-L Records와 Beats In Space Records에서 싱글을 발표한 후, 데뷔 앨범 Skygazer (2016, Crue-L Records), 두 번째 앨범 Aburelu (2020, 자가 레이블 Cizima), 그리고 세 번째 앨범 EKO (2024, Kakubarhythm)을 발표했다. 2026년에는 mulemusiq에서 Off-Axis EP를 발표했다.\n\n' +
       '클럽 음악을 기반으로 하면서도 특정 장르나 스타일에 얽매이지 않는 XTAL의 DJ 셋과 프로덕션은, 시대와 장르를 넘나들며 독자적이면서도 시간에 구속되지 않는 사운드를 들려준다.'
   },
 
