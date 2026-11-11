@@ -237,28 +237,23 @@
   var raf = null, lastTs = null, animTime = 0;
   // アニメの体感速度。周期が数十秒スケールで静止に見えていたため倍率を掛けて速める
   var SPEED = 2;
-  // スクロール中は再描画を止める方式にしたので、停止時は毎フレーム（60fps）で描画する。
   var reduce = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
-  // スクロール中は背景の再描画を止める。canvas 2D 描画はメインスレッドで動き、
-  // スクロールの合成とスレッドを奪い合ってガタつきの主因になるため、スクロール中は
-  // render() をスキップし、スクロールが止まってしばらく（SCROLL_IDLE_MS）経ってから再開する。
-  var scrolling = false, st = null, SCROLL_IDLE_MS = 160;
-  window.addEventListener('scroll', function () {
-    scrolling = true;
-    clearTimeout(st);
-    st = setTimeout(function () { scrolling = false; }, SCROLL_IDLE_MS);
-  }, { passive: true });
-
+  // スクロール中も連続して描画する。
+  //   以前は「スクロール中は render() を止め、停止後に再開」していたが、iOS Safari では
+  //   この"固まって見える旧フレーム → スクロール終了で再開"が「別のグラデが固定表示され
+  //   背景動画が再開する」という違和感として見えてしまっていた。
+  //   固定canvasは #bg を GPUレイヤーに載せてあり（styles.css の translateZ）、iOSの
+  //   スクロールはコンポジタ側で処理されるため、メインスレッドのcanvas再描画を続けても
+  //   スクロールの滑らかさは大きく損なわれない。常に描画してフリーズ/再開をなくす。
   function loop(ts) {
     if (lastTs == null) lastTs = ts;
-    var dt = ts - lastTs;               // 前フレームからの実経過時間（ms）
+    // 実経過時間（ms）。rAFがスクロール等で間引かれた直後に時間が飛んで
+    // アニメが大きくジャンプしないよう、1フレーム分の進みを上限クランプする。
+    var dt = Math.min(ts - lastTs, 50);
     lastTs = ts;
-    if (!scrolling) {
-      // アニメ用の時計はスクロール中は進めない。これで「止まったところから再開」になる
-      animTime += dt / 1000 * SPEED;
-      render(animTime);   // 停止時は毎フレーム（60fps）描画
-    }
+    animTime += dt / 1000 * SPEED;
+    render(animTime);
     raf = window.requestAnimationFrame(loop);
   }
   if (reduce || !window.requestAnimationFrame) { render(0.5); } // 静止時は少し咲かせた状態で
