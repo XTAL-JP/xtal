@@ -10,6 +10,13 @@
   if (!canvas || !canvas.getContext) return;
   var ctx = canvas.getContext('2d');
 
+  /* JS/canvas が有効であることを示すフラグを html に付ける。
+     これで CSS 側が body のフォールバックグラデ（no-JS 用）を無効化できる。
+     iOS Safari はスクロール中に position:fixed の canvas を合成し直さず、
+     背後の body グラデが一瞬露出してしまうため、canvas が背景を担う場合は
+     その別グラデ自体を消しておく。 */
+  document.documentElement.classList.add('js-bg');
+
   function rand(min, max) { return min + Math.random() * (max - min); }
 
   /* 暖色と寒色を半々で混ぜたパレット。

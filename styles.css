@@ -37,6 +37,14 @@ body {
   text-rendering: optimizeLegibility;
 }
 
+/* JS/canvas 有効時は body のフォールバックグラデを無効化する。
+   iOS Safari はスクロール中に position:fixed の #bg canvas を合成し直さず、
+   背後の body グラデが「別のグラデーションが固定表示」として一瞬露出してしまう。
+   canvas が背景を担うので、ここでは html の単色(#0a0812)だけを残す。 */
+html.js-bg body {
+  background: transparent;
+}
+
 /* 背景 canvas（全画面固定）
    iOS Safari は「position:fixed かつ負の z-index」の要素を、html/body に
    不透明な背景色があると背面に隠してしまう（＝canvasが消えて body の
@@ -49,6 +57,13 @@ body {
   height: 100%;
   z-index: 0;
   display: block;
+  /* iOS Safari でスクロール中も合成レイヤーを保持させ、
+     fixed canvas が外れて背後が露出するのを防ぐ（GPUレイヤーへ昇格） */
+  -webkit-transform: translateZ(0);
+  transform: translateZ(0);
+  -webkit-backface-visibility: hidden;
+  backface-visibility: hidden;
+  will-change: transform;
 }
 
 /* 可読性のための暗幕（上下＋中央の帯をわずかに落とし、明るい背景でも文字を読めるように） */
@@ -57,6 +72,11 @@ body {
   inset: 0;
   z-index: 1;
   pointer-events: none;
+  /* #bg と同様にGPUレイヤー化してスクロール中の合成外れを防ぐ */
+  -webkit-transform: translateZ(0);
+  transform: translateZ(0);
+  -webkit-backface-visibility: hidden;
+  backface-visibility: hidden;
   background:
     /* 中央（テキストが乗る帯）をやわらかく暗くする */
     radial-gradient(150% 82% at 50% 46%, rgba(0,0,0,0.22) 0%, rgba(0,0,0,0.08) 50%, rgba(0,0,0,0) 74%),
