@@ -120,6 +120,9 @@ TEMPO Slider という DJ向けのブラウザ拡張機能（Chrome / Firefox）
     { date: '2026-11-21', title: 'OSKA feat XTAL', venue: 'Club Mago', city: 'Nagoya', type: 'dj',
       note: 'OSKA MAIN — feat DJ: XTAL (Traks Boys / (((さらうんど)))) / DJs: KEITA (JACK), JION, SHOINO｜OSKA LOUNGE (AJITO in OSKA) — DJs: FUJI, NODA, REBORN, UTSUNOMIYA / Wine: Paradise nature / Sheesha: shisha&bar owl',
       time: '22:00–', price: 'Adv/WF ¥2,500 / Door ¥3,000 (+¥500 for 1 drink)' },
+    { date: '2026-11-28', title: 'Pan Pacific Playa presents K.E.S.R.I.P.', venue: 'LIBUSHI Bashamichi', city: 'Yokohama', type: 'dj',
+      note: 'KITANAKA BRICK&WHITE South 1F (by Bashamichi Station) — First held in 2005 at Bar Move, Yokohama; back after 21 years. With PAN PACIFIC PLAYA & family. / Live: 16RENDA, Cherryboy Function, Lil’ Yukichi, LUVRAW, Palmstreet, ZEN-LA-ROCK, AI (愛) / DJ: 37A, DIYZ, dj family, iGa-c, KEIHIN, KESRAW, Latin Quarter, PAPA-P, XTAL, yutaro, Kazunao Nagata, HAPPY SET',
+      time: 'Open 16:00 / 16:30–22:00', price: 'Adv ¥2,500 / Door ¥3,000 (incl. 1 drink) — Re-entry allowed' },
     {
       date: '2026-08-21',
       title: 'Photochemical Smog',
